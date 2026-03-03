@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Interfaces</string>
+    <string name="no_tienes_cuenta">No tienes cuenta?</string>
+    <string name="reg_strate">Regístrate</string>
+    <string name="rodapp">RodApp</string>
+    <string name="mensaje_bienvenida">La aventura está por iniciar,\npor favor inicia sesión</string>
+    <string name="nombre_usuario">Nombre de usuario</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="recupera_contrasena">Recupera Tu Contraseña</string>
+    <string name="ingresa_con_google">Ingresa con Google</string>
+    <string name="comienza">Comienza</string>
+    <string name="mensaje_home">Inicia una nueva aventura con RodApp y descubre una nueva forma de ver el mundo</string>
 </resources>

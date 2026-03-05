@@ -11,4 +11,14 @@
     <string name="ingresa_con_google">Ingresa con Google</string>
     <string name="comienza">Comienza</string>
     <string name="mensaje_home">Inicia una nueva aventura con RodApp y descubre una nueva forma de ver el mundo</string>
+    <string name="nombre_alumno">Diego Cala</string>
+
+    <!-- Strings para Registro -->
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="confirmar_contrasena">Confirmar Contraseña</string>
+    <string name="aceptar_terminos">Acepto los términos y condiciones</string>
+    <string name="ya_tienes_cuenta">Ya tienes cuenta?</string>
+    <string name="inicia_sesion">Inicia Sesión</string>
+    <string name="crear_cuenta">Crear Cuenta</string>
 </resources>

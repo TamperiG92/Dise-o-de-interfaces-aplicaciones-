@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">RodApp</string>
+    <string name="no_tienes_cuenta">No tienes cuenta?</string>
+    <string name="reg_strate">Regístrate</string>
+    <string name="rodapp">RodApp</string>
+    <string name="mensaje_bienvenida">La aventura está por iniciar,\npor favor inicia sesión</string>
+    <string name="nombre_usuario">Nombre de usuario</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="recupera_contrasena">Recupera Tu Contraseña</string>
+    <string name="ingresa_con_google">Ingresa con Google</string>
+    <string name="comienza">Comienza</string>
+    <string name="mensaje_home">Inicia una nueva aventura con RodApp y descubre una nueva forma de ver el mundo</string>
+    <string name="nombre_alumno">Diego Cala</string>
+
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="correo_electronico">Correo Electrónico</string>
+    <string name="numero_telefono">Número de Teléfono</string>
+    <string name="confirmar_contrasena">Confirmar Contraseña</string>
+    <string name="aceptar_terminos">Acepto los términos y condiciones</string>
+    <string name="ya_tienes_cuenta">Ya tienes cuenta?</string>
+    <string name="inicia_sesion">Inicia Sesión</string>
+    <string name="crear_cuenta">Crear Cuenta</string>
+
+    <string name="cuenta_creada_exito">¡Cuenta creada con éxito!</string>
+    <string name="error_terminos">Debes aceptar los términos y condiciones</string>
+    <string name="mi_tienda">Mi Tienda</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="inicio">Inicio</string>
+    <string name="catalogo">Catálogo</string>
+    <string name="configuracion">Configuración</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
+    <string name="perfil">Perfil</string>
+    <string name="favoritos">Favoritos</string>
+    <string name="navigation_drawer_open">Abrir menú de navegación</string>
+    <string name="navigation_drawer_close">Cerrar menú de navegación</string>
+    <string name="imagen_del_producto">Imagen del producto</string>
+    <string name="formato_precio">$%1$.2f</string>
+</resources>

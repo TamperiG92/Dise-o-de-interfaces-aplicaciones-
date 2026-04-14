@@ -1,0 +1,17 @@
+<resources>
+    <dimen name="padding_standard">32dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+
+    <dimen name="logo_size">100dp</dimen>
+
+    <dimen name="edittext_height">48dp</dimen>
+    <dimen name="edittext_padding">15dp</dimen>
+
+    <dimen name="button_width">220dp</dimen>
+    <dimen name="button_height">60dp</dimen>
+
+    <dimen name="text_size_title">28sp</dimen>
+    <dimen name="text_size_button">20sp</dimen>
+</resources>

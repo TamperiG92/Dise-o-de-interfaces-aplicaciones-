@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_blue"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_standard"
+    android:gravity="center_horizontal"
+    tools:context=".activities.auth.register_user">
+
+    <ImageView
+        android:id="@+id/logo_registro"
+        android:layout_width="@dimen/logo_size"
+        android:layout_height="@dimen/logo_size"
+        android:layout_marginTop="@dimen/margin_large"
+        android:contentDescription="@string/app_name"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/titulo_registro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:fontFamily="serif"
+        android:text="@string/reg_strate"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_title"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <EditText
+                android:id="@+id/nombre_registro"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:layout_marginTop="@dimen/margin_large"
+                android:background="@drawable/texto_usuario"
+                android:hint="@string/nombre"
+                android:inputType="textPersonName"
+                android:paddingStart="@dimen/edittext_padding"
+                android:paddingEnd="@dimen/edittext_padding" />
+
+            <EditText
+                android:id="@+id/apellido_registro"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="@drawable/texto_usuario"
+                android:hint="@string/apellido"
+                android:inputType="textPersonName"
+                android:paddingStart="@dimen/edittext_padding"
+                android:paddingEnd="@dimen/edittext_padding" />
+
+            <EditText
+                android:id="@+id/correo_registro"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="@drawable/texto_usuario"
+                android:hint="@string/correo_electronico"
+                android:inputType="textEmailAddress"
+                android:paddingStart="@dimen/edittext_padding"
+                android:paddingEnd="@dimen/edittext_padding" />
+
+            <EditText
+                android:id="@+id/contrasena_registro"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="@drawable/texto_usuario"
+                android:hint="@string/contrasena"
+                android:inputType="textPassword"
+                android:paddingStart="@dimen/edittext_padding"
+                android:paddingEnd="@dimen/edittext_padding" />
+
+            <EditText
+                android:id="@+id/confirmar_contrasena_registro"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="@drawable/texto_usuario"
+                android:hint="@string/confirmar_contrasena"
+                android:inputType="textPassword"
+                android:paddingStart="@dimen/edittext_padding"
+                android:paddingEnd="@dimen/edittext_padding" />
+
+            <CheckBox
+                android:id="@+id/check_terminos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:fontFamily="serif"
+                android:text="@string/aceptar_terminos"
+                android:textColor="@color/black" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/boton_crear_cuenta"
+                android:layout_width="@dimen/button_width"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginTop="@dimen/margin_large"
+                android:background="@drawable/boton_redondo"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/crear_cuenta"
+                android:textAllCaps="false"
+                android:textColor="@color/button_blue"
+                android:textSize="@dimen/text_size_button" />
+
+            <TextView
+                android:id="@+id/re_cuenta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_large"
+                android:fontFamily="serif"
+                android:text="@string/ya_tienes_cuenta"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

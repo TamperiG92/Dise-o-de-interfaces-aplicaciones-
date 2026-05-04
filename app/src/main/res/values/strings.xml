@@ -36,6 +36,16 @@
     <string name="footer_text">RODAPP — BOGOTÁ 2024</string>
     <string name="btn_back_desc">Regresar</string>
 
+    <!-- Errores de autenticación -->
+    <string name="error_credenciales">Correo o contraseña incorrectos</string>
+    <string name="error_usuario_existente">Este correo ya está registrado</string>
+    <string name="error_conexion">Error de conexión. Revisa tu internet</string>
+    <string name="error_inesperado">Error inesperado. Intenta de nuevo</string>
+    <string name="error_email_invalido">Formato de correo inválido</string>
+    <string name="error_pass_corta">La contraseña debe tener al menos 8 caracteres</string>
+    <string name="error_campos_vacios">Por favor llena todos los campos</string>
+    <string name="error_terminos">Debes aceptar los términos y condiciones</string>
+
     <!-- Éxito -->
     <string name="cuenta_creada">¡Cuenta Creada!</string>
     <string name="registro_exitoso">Tu registro ha sido exitoso. Ya puedes acceder a todas las funciones de RodApp.</string>
@@ -89,6 +99,9 @@
     <!-- Adicionales -->
     <string name="label_mapa">Mapa</string>
     <string name="label_docs_adicionales">Documentos Adicionales</string>
+    <string name="label_registrar_documentos">REGISTRAR DOCUMENTOS</string>
+    <string name="label_docs_adicionales_desc">Sube tus documentos adicionales para tenerlos siempre a mano y recibir alertas de vencimiento.</string>
+    <string name="label_licencia_conduccion">Licencia de Conducción</string>
     <string name="label_modelo_referencia">MODELO / REFERENCIA</string>
     <string name="label_detalles_adicionales">DETALLES ADICIONALES</string>
     <string name="label_preferencias">PREFERENCIAS</string>

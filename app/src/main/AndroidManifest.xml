@@ -36,13 +36,23 @@
         <!-- Login -->
         <activity
             android:name=".activities.auth.login"
-            android:exported="false"
-            android:theme="@style/Theme.RodApp" />
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.RodApp">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="rodapp" android:host="login" />
+            </intent-filter>
+        </activity>
 
         <!-- Registro -->
         <activity
             android:name=".activities.auth.register_user"
             android:exported="false"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.RodApp" />
 
         <!-- Actividad Principal (Post-Login) -->

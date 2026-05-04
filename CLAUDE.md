@@ -119,3 +119,7 @@ All UI text is in Spanish (Colombia). Every string must be defined in `res/value
 - **Preferences:** `androidx.preference:preference-ktx`
 
 There is currently **no backend/database layer** — no Room, Retrofit, or Supabase dependencies are present in the build yet.
+
+### External Reference Guidelines
+**NOTICE** The file **BASE_PROJECT_CONTEXT.md** serves as a supplementary technical reference and pattern library from a parallel academic project. It should be treated as a "blueprint of possibilities" for implementing infrastructure 
+like Supabase, Biometrics, Security managers, structure, name of variables, code practices, etc. However, this CLAUDE.md file remains the primary source of truth for the current project’s architecture, navigation flow, and dependencies. Do not perform migrations or apply configurations from the base project unless explicitly instructed to port a specific feature, as doing so may conflict with the current system's established logic.

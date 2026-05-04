@@ -1,14 +1,15 @@
 package com.example.rodapp.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.rodapp.activities.auth.login
+import com.example.rodapp.R
+import com.example.rodapp.activities.main.MainActivity
 import com.example.rodapp.databinding.FragmentPerfilBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class PerfilFragment : Fragment() {
 
@@ -30,13 +31,15 @@ class PerfilFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        // Lógica de Cerrar Sesión
         binding.btnLogout.setOnClickListener {
-            val intent = Intent(requireContext(), login::class.java)
-            // Limpiar el stack de actividades para que no pueda volver atrás
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            requireActivity().finish()
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(getString(R.string.dialog_logout_title))
+                .setMessage(getString(R.string.dialog_logout_message))
+                .setPositiveButton(getString(R.string.btn_logout)) { _, _ ->
+                    (requireActivity() as MainActivity).cerrarSesion()
+                }
+                .setNegativeButton(getString(R.string.btn_cancelar), null)
+                .show()
         }
     }
 

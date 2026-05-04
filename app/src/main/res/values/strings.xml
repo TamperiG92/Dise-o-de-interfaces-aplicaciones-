@@ -193,6 +193,9 @@
     <string name="label_faq">Preguntas Frecuentes</string>
     <string name="label_contacto">Contactar Soporte</string>
     <string name="btn_logout">Cerrar Sesión</string>
+    <string name="btn_cancelar">Cancelar</string>
+    <string name="dialog_logout_title">Cerrar sesión</string>
+    <string name="dialog_logout_message">¿Estás seguro de que deseas cerrar sesión?</string>
     <string name="title_registro_moto_main">Registro de tu Moto</string>
     <string name="hint_modelo_moto">Ej. MT-09, R6, Pulsar 200</string>
     <string name="label_placa_main">PLACA</string>

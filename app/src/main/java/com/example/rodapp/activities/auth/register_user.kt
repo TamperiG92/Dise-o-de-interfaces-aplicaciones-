@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class UserProfile(val id: String, val name: String, val lastname: String)
+data class UserProfile(val id: String, val name: String, val lastname: String, val correo: String)
 
 class register_user : AppCompatActivity() {
 
@@ -74,7 +74,7 @@ class register_user : AppCompatActivity() {
                 val userId = SupabaseClient.client.auth.currentUserOrNull()?.id
                 if (userId != null) {
                     SupabaseClient.client.postgrest.from("users")
-                        .insert(UserProfile(id = userId, name = nombre, lastname = ""))
+                        .insert(UserProfile(id = userId, name = nombre, lastname = "", correo = correo))
                 }
                 toast(getString(R.string.cuenta_creada))
                 startActivity(

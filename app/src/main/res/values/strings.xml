@@ -228,6 +228,19 @@
     <string name="filter_desc">Filtrar</string>
     <string name="empty_calendar_desc">Calendario vacío</string>
 
+    <!-- Backend strings -->
+    <string name="btn_ver_documentos">Ver Documentos</string>
+    <string name="label_placa_formato">Placa: %s</string>
+    <string name="moto_registrada">Motocicleta registrada exitosamente</string>
+    <string name="soat_guardado">SOAT guardado</string>
+    <string name="rtm_guardada">RTM guardada</string>
+    <string name="combustible_registrado">Recarga registrada</string>
+    <string name="mantenimiento_guardado">Mantenimiento guardado</string>
+    <string name="documento_guardado">Documento guardado</string>
+    <string name="error_placa_duplicada">Esta placa ya está registrada</string>
+    <string name="error_fecha_requerida">Selecciona una fecha válida</string>
+    <string name="label_seleccionar_fecha">Seleccionar fecha</string>
+
     <!-- Admin Panel -->
     <string name="hint_search_users">Search by name or motorcycle...</string>
     <string name="title_active_users">Active Users</string>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="marcas_moto">
+        <item>Seleccionar marca</item>
+        <item>AKT</item>
+        <item>Auteco</item>
+        <item>Bajaj</item>
+        <item>BMW</item>
+        <item>Ducati</item>
+        <item>Harley-Davidson</item>
+        <item>Honda</item>
+        <item>Kawasaki</item>
+        <item>KTM</item>
+        <item>Royal Enfield</item>
+        <item>Suzuki</item>
+        <item>Triumph</item>
+        <item>Yamaha</item>
+        <item>Otra</item>
+    </string-array>
+
+    <string-array name="aseguradoras_soat">
+        <item>Seleccionar aseguradora</item>
+        <item>Allianz</item>
+        <item>AXA Colpatria</item>
+        <item>Bolívar</item>
+        <item>La Equidad</item>
+        <item>Liberty</item>
+        <item>Mapfre</item>
+        <item>Mondiale</item>
+        <item>Previsora</item>
+        <item>Sura</item>
+        <item>Zurich</item>
+    </string-array>
+
+    <string-array name="tipos_gasolina">
+        <item>Regular</item>
+        <item>Premium</item>
+        <item>Diésel</item>
+        <item>Extra</item>
+    </string-array>
+
+    <string-array name="tipos_mantenimiento">
+        <item>Aceite de motor</item>
+        <item>Filtro de aire</item>
+        <item>Filtro de aceite</item>
+        <item>Pastillas de freno</item>
+        <item>Cadena y piñones</item>
+        <item>Bujías</item>
+        <item>Líquido de frenos</item>
+        <item>Neumáticos</item>
+        <item>Lavado y detallado</item>
+        <item>Revisión general</item>
+        <item>Otro</item>
+    </string-array>
+</resources>

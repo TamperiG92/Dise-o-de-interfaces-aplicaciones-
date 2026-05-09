@@ -5,64 +5,70 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_blue"
-    android:fillViewport="true"
     tools:context=".fragments.HistorialFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="24dp">
 
         <!-- Header -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_profile_small"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/logo"
-                android:contentDescription="Perfil" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <TextView
-            android:id="@+id/lbl_historial_de"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/label_historial_de"
-            android:textColor="@color/gris_hint"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/card_profile_small"
-            app:layout_constraintTop_toTopOf="@+id/card_profile_small" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/txt_actividad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_actividad"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/lbl_historial_de"
-            app:layout_constraintTop_toBottomOf="@+id/lbl_historial_de" />
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_profile_small"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/logo"
+                    android:contentDescription="Perfil" />
+            </com.google.android.material.card.MaterialCardView>
 
-        <!-- Summary Cards Row (3 cards) -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/lbl_historial_de"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_historial_de"
+                    android:textColor="@color/gris_hint"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txt_actividad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_actividad"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Summary Cards Row -->
         <LinearLayout
             android:id="@+id/layout_summary_cards"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:orientation="horizontal"
-            android:baselineAligned="false"
-            app:layout_constraintTop_toBottomOf="@+id/txt_actividad">
+            android:baselineAligned="false">
 
-            <!-- Mantenimientos -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -100,7 +106,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Gasto Total -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -139,7 +144,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Eficiencia -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -189,9 +193,7 @@
             android:textColor="@color/gris_hint"
             android:textSize="11sp"
             android:textStyle="bold"
-            android:letterSpacing="0.08"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_summary_cards" />
+            android:letterSpacing="0.08" />
 
         <!-- Chart Card -->
         <com.google.android.material.card.MaterialCardView
@@ -201,8 +203,7 @@
             android:layout_marginTop="12dp"
             app:cardBackgroundColor="@color/dark_blue"
             app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/lbl_tendencia">
+            app:cardElevation="0dp">
 
             <com.example.rodapp.fragments.HistorialChartView
                 android:id="@+id/chart_gastos"
@@ -218,8 +219,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:singleSelection="true"
-            app:layout_constraintTop_toBottomOf="@+id/card_chart">
+            app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_todo"
@@ -252,8 +252,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:nestedScrollingEnabled="false"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@+id/chip_group_filtro" />
+            android:visibility="gone" />
 
         <!-- Empty State -->
         <LinearLayout
@@ -261,11 +260,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="80dp"
+            android:layout_marginBottom="120dp"
             android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/rv_historial"
-            app:layout_constraintBottom_toBottomOf="parent">
+            android:orientation="vertical">
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="80dp"
@@ -301,5 +298,5 @@
                 android:textSize="13sp" />
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </androidx.core.widget.NestedScrollView>

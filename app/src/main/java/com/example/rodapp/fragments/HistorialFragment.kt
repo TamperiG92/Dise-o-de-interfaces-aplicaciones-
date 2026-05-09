@@ -37,7 +37,9 @@ class HistorialFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvHistorial.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvHistorial.layoutManager = object : LinearLayoutManager(requireContext()) {
+            override fun canScrollVertically() = false
+        }
         setupChips()
         cargarHistorial()
     }

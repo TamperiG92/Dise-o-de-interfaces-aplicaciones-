@@ -70,7 +70,10 @@ class InicioFragment : Fragment() {
 
         binding.llenoContent.rvActividadReciente.layoutManager =
             LinearLayoutManager(requireContext())
+    }
 
+    override fun onResume() {
+        super.onResume()
         viewLifecycleOwner.lifecycleScope.launch { cargarDashboard() }
     }
 

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rodapp.R
 import com.example.rodapp.SharedViewModel
 import com.example.rodapp.SupabaseClient
@@ -33,38 +34,48 @@ class GarajeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.rvMotos.layoutManager = LinearLayoutManager(requireContext())
         binding.btnRegistrarMoto.setOnClickListener {
             findNavController().navigate(R.id.navigation_registro_moto)
         }
-
-        viewLifecycleOwner.lifecycleScope.launch { cargarMoto() }
+        binding.fabAgregarMoto.setOnClickListener {
+            findNavController().navigate(R.id.navigation_registro_moto)
+        }
     }
 
-    private suspend fun cargarMoto() {
+    override fun onResume() {
+        super.onResume()
+        viewLifecycleOwner.lifecycleScope.launch { cargarMotos() }
+    }
+
+    private suspend fun cargarMotos() {
         val userId = SupabaseClient.client.auth.currentUserOrNull()?.id ?: return
         try {
             val motos = SupabaseClient.client.postgrest
                 .from("motos")
-                .select {
-                    filter { eq("user_id", userId) }
-                    limit(1L)
-                }
+                .select { filter { eq("user_id", userId) } }
                 .decodeList<Moto>()
 
             if (_binding == null) return
-            if (motos.isNotEmpty()) {
-                val moto = motos.first()
-                sharedVm.motoId = moto.id
-                sharedVm.motoNombre = "${moto.marca} ${moto.modelo}"
-                binding.titleGarajeVacio.text = "${moto.marca} ${moto.modelo}"
-                binding.subtitleGarajeVacio.text = getString(R.string.label_placa_formato, moto.placa)
-                binding.btnRegistrarMoto.text = getString(R.string.btn_ver_documentos)
-                binding.btnRegistrarMoto.setOnClickListener {
+
+            if (motos.isEmpty()) {
+                binding.layoutGarajeVacio.visibility = View.VISIBLE
+                binding.layoutGarajeLista.visibility = View.GONE
+            } else {
+                binding.layoutGarajeVacio.visibility = View.GONE
+                binding.layoutGarajeLista.visibility = View.VISIBLE
+                binding.rvMotos.adapter = MotoAdapter(motos) { moto ->
+                    sharedVm.motoId = moto.id
+                    sharedVm.motoNombre = "${moto.marca} ${moto.modelo}"
+                    findNavController().navigate(R.id.navigation_garaje_documentos)
+                }
+                if (sharedVm.motoId == null && motos.size == 1) {
+                    sharedVm.motoId = motos[0].id
+                    sharedVm.motoNombre = "${motos[0].marca} ${motos[0].modelo}"
                     findNavController().navigate(R.id.navigation_garaje_documentos)
                 }
             }
-        } catch (_: Exception) { /* mantener empty state */ }
+        } catch (_: Exception) { }
     }
 
     override fun onDestroyView() {

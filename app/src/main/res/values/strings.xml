@@ -284,6 +284,12 @@
     <string name="error_passwords_no_coinciden">Las contraseñas no coinciden</string>
     <string name="password_actualizada">Contraseña actualizada</string>
 
+    <!-- Garaje multi-moto -->
+    <string name="label_mis_motos">Mis motos</string>
+    <string name="label_agregar_moto">Agregar moto</string>
+    <string name="label_selecciona_moto">Selecciona una moto para ver sus documentos</string>
+    <string name="label_tus_motos">Tus motos</string>
+
     <!-- Alertas / notificaciones -->
     <string name="notif_channel_name">Alertas de Vencimiento</string>
     <string name="notif_channel_desc">Documentos próximos a vencer en los próximos 5 días</string>

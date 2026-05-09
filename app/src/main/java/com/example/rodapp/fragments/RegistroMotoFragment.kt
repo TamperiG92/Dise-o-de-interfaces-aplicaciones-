@@ -129,7 +129,7 @@ class RegistroMotoFragment : Fragment() {
                 sharedVm.motoNombre = "$marca $modelo"
 
                 toast(getString(R.string.moto_registrada))
-                findNavController().navigate(R.id.navigation_garaje_documentos)
+                findNavController().navigateUp()
             } catch (e: Exception) {
                 Log.e("RegistroMoto", "insert error: ${e.javaClass.simpleName}: ${e.message}", e)
                 val msg = e.message ?: ""

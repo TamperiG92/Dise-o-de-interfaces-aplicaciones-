@@ -63,6 +63,10 @@ class GarajeDocumentosFragment : Fragment() {
             findNavController().navigate(R.id.navigation_perfil)
         }
 
+        binding.fabMisMotos.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         viewLifecycleOwner.lifecycleScope.launch { cargarEstadoDocumentos() }
     }
 

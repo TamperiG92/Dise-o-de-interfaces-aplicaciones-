@@ -155,3 +155,4 @@ PerfilFragment ──select──▶ users WHERE id = auth.uid()
 - Upload real de archivos a Storage (foto RTM, documentos adjuntos, avatar)
 - `GarajeFragment` — Lista de motos cuando el usuario tiene más de una
 - `user_preferences` — Guardar/cargar las preferencias del usuario (tema, unidades, notificaciones)
+- **Bifurcación por rol en login** — Después de autenticar, `login.kt` debe consultar `users.role` y navegar a `AdminActivity` si `role = 'admin'` o a `MainActivity` si `role = 'client'`. Actualmente todos los usuarios van a `MainActivity` sin importar su rol. Además, `AdminUsersFragment` usa datos mock hardcodeados y debe conectarse a Supabase (la RLS ya permite que el admin lea todos los registros).

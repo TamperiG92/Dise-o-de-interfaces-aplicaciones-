@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.rodapp.R
 import com.example.rodapp.databinding.FragmentDocumentosAdicionalesBinding
 
 class DocumentosAdicionalesFragment : Fragment() {
@@ -28,7 +29,26 @@ class DocumentosAdicionalesFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        // Aquí puedes agregar más lógica para los botones de Licencia, Seguro, etc.
+        binding.btnAddLicencia.setOnClickListener {
+            findNavController().navigate(
+                R.id.navigation_nuevo_documento,
+                Bundle().apply { putString("tipo_documento", "LICENCIA") }
+            )
+        }
+
+        binding.btnAddTodoRiesgo.setOnClickListener {
+            findNavController().navigate(
+                R.id.navigation_nuevo_documento,
+                Bundle().apply { putString("tipo_documento", "SEGURO_TODO_RIESGO") }
+            )
+        }
+
+        binding.btnCrearDocPersonalizado.setOnClickListener {
+            findNavController().navigate(
+                R.id.navigation_nuevo_documento,
+                Bundle().apply { putString("tipo_documento", "PERSONALIZADO") }
+            )
+        }
     }
 
     override fun onDestroyView() {

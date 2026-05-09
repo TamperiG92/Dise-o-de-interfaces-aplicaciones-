@@ -3,6 +3,7 @@ package com.example.rodapp
 import io.github.jan.supabase.auth.Auth
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
+import io.github.jan.supabase.storage.Storage
 
 object SupabaseClient {
     val client = createSupabaseClient(
@@ -14,5 +15,6 @@ object SupabaseClient {
             host = "login"
         }
         install(Postgrest)
+        install(Storage)
     }
 }

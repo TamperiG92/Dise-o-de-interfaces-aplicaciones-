@@ -111,6 +111,7 @@
                         app:layout_constraintStart_toStartOf="@+id/lbl_licencia"
                         app:layout_constraintTop_toBottomOf="@+id/lbl_licencia" />
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_add_licencia"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         app:icon="@android:drawable/ic_input_add"
@@ -176,6 +177,7 @@
                         app:layout_constraintStart_toStartOf="@+id/lbl_todo_riesgo"
                         app:layout_constraintTop_toBottomOf="@+id/lbl_todo_riesgo" />
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_add_todo_riesgo"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         app:icon="@android:drawable/ic_input_add"

@@ -102,4 +102,10 @@
         android:label="Detalle de Documento"
         tools:layout="@layout/fragment_documento_detalle" />
 
+    <fragment
+        android:id="@+id/navigation_cambiar_password"
+        android:name="com.example.rodapp.fragments.CambiarPasswordFragment"
+        android:label="Cambiar Contraseña"
+        tools:layout="@layout/fragment_cambiar_password" />
+
 </navigation>

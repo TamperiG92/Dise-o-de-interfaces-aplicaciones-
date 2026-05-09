@@ -115,12 +115,11 @@
                         app:layout_constraintStart_toEndOf="@+id/icon_soat"
                         app:layout_constraintTop_toTopOf="@+id/icon_soat" />
                     <TextView
+                        android:id="@+id/badge_estado_soat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/boton_redondo"
                         android:backgroundTint="@color/warning_yellow"
-                        android:backgroundTintMode="src_over"
-                        android:alpha="0.2"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
                         android:layout_marginStart="8dp"
@@ -131,6 +130,7 @@
                         app:layout_constraintStart_toEndOf="@+id/lbl_soat"
                         app:layout_constraintTop_toTopOf="@+id/lbl_soat" />
                     <TextView
+                        android:id="@+id/txt_venc_soat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_soat_full"
@@ -139,6 +139,7 @@
                         app:layout_constraintStart_toStartOf="@+id/lbl_soat"
                         app:layout_constraintTop_toBottomOf="@+id/lbl_soat" />
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_add_soat"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         app:icon="@android:drawable/ic_input_add"
@@ -197,12 +198,11 @@
                         app:layout_constraintStart_toEndOf="@+id/icon_rtm"
                         app:layout_constraintTop_toTopOf="@+id/icon_rtm" />
                     <TextView
+                        android:id="@+id/badge_estado_rtm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/boton_redondo"
                         android:backgroundTint="@color/warning_yellow"
-                        android:backgroundTintMode="src_over"
-                        android:alpha="0.2"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
                         android:layout_marginStart="8dp"
@@ -213,6 +213,7 @@
                         app:layout_constraintStart_toEndOf="@+id/lbl_rtm"
                         app:layout_constraintTop_toTopOf="@+id/lbl_rtm" />
                     <TextView
+                        android:id="@+id/txt_venc_rtm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_rtm_completo"
@@ -221,6 +222,7 @@
                         app:layout_constraintStart_toStartOf="@+id/lbl_rtm"
                         app:layout_constraintTop_toBottomOf="@+id/lbl_rtm" />
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_add_rtm"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         app:icon="@android:drawable/ic_input_add"
@@ -252,8 +254,7 @@
                 app:cardElevation="0dp"
                 app:strokeColor="@color/surface_stroke"
                 app:strokeWidth="1dp"
-                app:layout_constraintTop_toBottomOf="@+id/card_rtm"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/card_rtm">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -289,6 +290,7 @@
                         app:layout_constraintStart_toStartOf="@+id/lbl_otro"
                         app:layout_constraintTop_toBottomOf="@+id/lbl_otro" />
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_add_otro"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         app:icon="@android:drawable/ic_input_add"
@@ -307,6 +309,7 @@
                         app:cornerRadius="12dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

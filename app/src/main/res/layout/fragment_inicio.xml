@@ -135,7 +135,9 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone">
 
-                <include layout="@layout/fragment_inicio_lleno" />
+                <include
+                    android:id="@+id/lleno_content"
+                    layout="@layout/fragment_inicio_lleno" />
 
             </FrameLayout>
 
@@ -149,7 +151,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="172dp"
         android:gravity="end"
         android:orientation="vertical"
         android:visibility="gone">
@@ -173,10 +175,11 @@
                 android:paddingTop="4dp"
                 android:paddingEnd="12dp"
                 android:paddingBottom="4dp"
-                android:text="Nuevo Combustible"
+                android:text="@string/label_nuevo_combustible"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_combustible_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:fabSize="mini"
@@ -204,10 +207,11 @@
                 android:paddingTop="4dp"
                 android:paddingEnd="12dp"
                 android:paddingBottom="4dp"
-                android:text="Nuevo Mantenimiento"
+                android:text="@string/label_nuevo_mantenimiento"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_mantenimiento_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:fabSize="mini"
@@ -224,7 +228,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="96dp"
         app:srcCompat="@android:drawable/ic_input_add"
         app:backgroundTint="@color/button_blue"
         app:tint="@color/black" />

@@ -147,6 +147,7 @@
     <string name="label_unidades_km_full">Kilómetros (km)</string>
     <string name="label_fecha_vencimiento">Fecha de vencimiento</string>
     <string name="label_nuevo_combustible">Nuevo Combustible</string>
+    <string name="label_nuevo_mantenimiento">Nuevo Mantenimiento</string>
     <string name="label_alertas_mantenimiento">Alertas de Mantenimiento</string>
     <string name="label_soat_full">Seguro Obligatorio de Accidentes</string>
     <string name="label_cop">COP</string>
@@ -214,19 +215,26 @@
     <string name="label_guardar_posicion">Guardar posición</string>
     <string name="label_bogota_placeholder">Bogotá, Cundinamarca</string>
     <string name="btn_registrar_recarga">Registrar Recarga</string>
+    <string name="label_litros_cargados">LITROS CARGADOS</string>
+    <string name="hint_litros">Ej. 3.5</string>
+    <string name="label_unidad_litros">L</string>
+    <string name="label_opcional">(Opcional)</string>
 
     <!-- Mantenimiento Additions -->
     <string name="hint_repetir_km">Repetir cada (ej. 3000) km</string>
     <string name="hint_notas_mantenimiento">Marca de aceite, costo, nombre del taller, observaciones...</string>
 
     <!-- Historial Additions -->
-    <string name="label_tendencia_gastos">TENDENCIA DE GASTOS</string>
-    <string name="label_sin_datos_mes">Sin datos este mes</string>
+    <string name="label_tendencia_gastos">TENDENCIA DE GASTOS (6 meses)</string>
+    <string name="label_sin_datos_mes">Sin datos registrados</string>
     <string name="label_no_actividad">No tienes actividad registrada</string>
     <string name="label_no_actividad_desc">Tus tanqueos y mantenimientos\naparecerán aquí una vez los\nagregues.</string>
     <string name="label_cop_mes">COP/mes</string>
     <string name="filter_desc">Filtrar</string>
     <string name="empty_calendar_desc">Calendario vacío</string>
+    <string name="label_eficiencia">Eficiencia</string>
+    <string name="label_kml_promedio">km/L prom.</string>
+    <string name="label_filtro_todo">Todo</string>
 
     <!-- Backend strings -->
     <string name="btn_ver_documentos">Ver Documentos</string>
@@ -253,4 +261,34 @@
     <string name="placeholder_total_users">1,284</string>
     <string name="placeholder_alerts">42</string>
     <string name="placeholder_initials">JD</string>
+
+    <!-- Historial -->
+    <string name="label_combustible">Combustible</string>
+    <string name="label_documento">Documento</string>
+
+    <!-- Estado documentos -->
+    <string name="label_vencido">VENCIDO</string>
+    <string name="label_sin_registro">SIN REGISTRO</string>
+    <string name="label_vence_hasta">Vence: %s</string>
+    <string name="label_acciones_rapidas">ACCIONES RÁPIDAS</string>
+    <string name="label_km_con_valor">%d km</string>
+    <string name="foto_actualizada">Foto actualizada</string>
+
+    <!-- Cambiar contraseña -->
+    <string name="title_cambiar_password">Cambiar Contraseña</string>
+    <string name="subtitle_cambiar_password">Ingresa y confirma tu nueva contraseña. El cambio aplicará de inmediato en tu sesión activa.</string>
+    <string name="lbl_nueva_password">NUEVA CONTRASEÑA</string>
+    <string name="lbl_confirmar_password">CONFIRMAR CONTRASEÑA</string>
+    <string name="hint_confirmar_password">Repite la contraseña</string>
+    <string name="btn_cambiar_password">Cambiar Contraseña</string>
+    <string name="error_passwords_no_coinciden">Las contraseñas no coinciden</string>
+    <string name="password_actualizada">Contraseña actualizada</string>
+
+    <!-- Alertas / notificaciones -->
+    <string name="notif_channel_name">Alertas de Vencimiento</string>
+    <string name="notif_channel_desc">Documentos próximos a vencer en los próximos 5 días</string>
+    <string name="notif_soat_titulo">SOAT próximo a vencer</string>
+    <string name="notif_rtm_titulo">RTM próxima a vencer</string>
+    <string name="notif_doc_titulo">Documento próximo a vencer</string>
+    <string name="notif_cuerpo_vence">%1$s — vence el %2$s</string>
 </resources>

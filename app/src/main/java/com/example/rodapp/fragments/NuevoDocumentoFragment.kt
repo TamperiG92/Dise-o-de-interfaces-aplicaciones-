@@ -27,6 +27,8 @@ class NuevoDocumentoFragment : Fragment() {
     private val binding get() = _binding!!
     private val sharedVm: SharedViewModel by activityViewModels()
 
+    private var tipoDocumento: String = "PERSONALIZADO"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,6 +39,21 @@ class NuevoDocumentoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        tipoDocumento = arguments?.getString("tipo_documento") ?: "PERSONALIZADO"
+
+        when (tipoDocumento) {
+            "LICENCIA" -> {
+                binding.titleNuevoDoc.text = getString(R.string.label_licencia_conduccion)
+                binding.etNombreDoc.setText(getString(R.string.label_licencia_conduccion))
+                binding.etNombreDoc.isEnabled = false
+            }
+            "SEGURO_TODO_RIESGO" -> {
+                binding.titleNuevoDoc.text = getString(R.string.label_seguro_todo_riesgo)
+                binding.etNombreDoc.setText(getString(R.string.label_seguro_todo_riesgo))
+                binding.etNombreDoc.isEnabled = false
+            }
+        }
 
         binding.etVencimientoPersonal.setOnClickListener {
             val picker = MaterialDatePicker.Builder.datePicker()
@@ -64,7 +81,6 @@ class NuevoDocumentoFragment : Fragment() {
         val nombre = binding.etNombreDoc.text.toString().trim()
         val entidad = binding.etEntidad.text.toString().trim()
         val vencimientoDisplay = binding.etVencimientoPersonal.text.toString().trim()
-        val recordatorio = true
 
         if (nombre.isEmpty()) {
             toast(getString(R.string.error_campos_vacios))
@@ -89,11 +105,11 @@ class NuevoDocumentoFragment : Fragment() {
                 SupabaseClient.client.postgrest.from("documentos").insert(
                     DocumentoInsert(
                         moto_id = motoId,
-                        tipo = "PERSONALIZADO",
+                        tipo = tipoDocumento,
                         nombre = nombre,
                         entidad_emisora = entidad.ifEmpty { null },
                         fecha_vencimiento = isoVencimiento,
-                        recordatorio_activo = recordatorio
+                        recordatorio_activo = true
                     )
                 )
                 toast(getString(R.string.documento_guardado))

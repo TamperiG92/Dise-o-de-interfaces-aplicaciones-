@@ -146,6 +146,61 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
+        <!-- Litros cargados -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/label_litros_cargados"
+                android:textColor="@color/text_gray"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_opcional"
+                android:textColor="@color/text_dark_slate"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/design_snackbar_background"
+            android:backgroundTint="@color/surface_card"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp">
+
+            <EditText
+                android:id="@+id/et_litros"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/hint_litros"
+                android:inputType="numberDecimal"
+                android:textColor="@color/text_light"
+                android:textColorHint="@color/text_dark_slate"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_unidad_litros"
+                android:textColor="@color/text_dark_slate"
+                android:textSize="12sp" />
+        </LinearLayout>
+
         <!-- Kilometraje -->
         <TextView
             android:id="@+id/lbl_km"

@@ -1,11 +1,14 @@
 package com.example.rodapp.fragments
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -17,6 +20,8 @@ import com.example.rodapp.databinding.FragmentRegistroMotoBinding
 import com.example.rodapp.models.Moto
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.postgrest.postgrest
+import io.github.jan.supabase.storage.storage
+import android.util.Log
 import kotlinx.coroutines.launch
 
 class RegistroMotoFragment : Fragment() {
@@ -24,6 +29,18 @@ class RegistroMotoFragment : Fragment() {
     private var _binding: FragmentRegistroMotoBinding? = null
     private val binding get() = _binding!!
     private val sharedVm: SharedViewModel by activityViewModels()
+
+    private var selectedPhotoUri: Uri? = null
+
+    private val pickImage = registerForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        uri ?: return@registerForActivityResult
+        selectedPhotoUri = uri
+        binding.imgMotoPreview.setImageURI(uri)
+        binding.imgMotoPreview.alpha = 1f
+        binding.imgMotoPreview.clearColorFilter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +57,10 @@ class RegistroMotoFragment : Fragment() {
         binding.spinnerMarca.adapter = ArrayAdapter(
             requireContext(), android.R.layout.simple_spinner_item, marcas
         ).also { it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
+
+        binding.cardIconMoto.setOnClickListener {
+            pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
 
         binding.btnBack.setOnClickListener { findNavController().navigateUp() }
         binding.btnGuardarEmpezar.setOnClickListener { guardarMoto() }
@@ -60,14 +81,31 @@ class RegistroMotoFragment : Fragment() {
 
         val userId = SupabaseClient.client.auth.currentUserOrNull()?.id
         if (userId == null) {
+            Log.e("RegistroMoto", "userId is null — session not active")
             toast(getString(R.string.error_inesperado))
             return
         }
 
+        Log.d("RegistroMoto", "userId=$userId, placa=$placa, marca=$marca, modelo=$modelo")
         binding.btnGuardarEmpezar.isEnabled = false
 
         viewLifecycleOwner.lifecycleScope.launch {
             try {
+                var fotoUrl: String? = null
+                selectedPhotoUri?.let { uri ->
+                    try {
+                        val bytes = requireContext().contentResolver
+                            .openInputStream(uri)?.use { it.readBytes() }
+                        if (bytes != null) {
+                            val path = "$userId/motos/${System.currentTimeMillis()}.jpg"
+                            SupabaseClient.client.storage.from("avatars").upload(path, bytes) { upsert = true }
+                            fotoUrl = SupabaseClient.client.storage.from("avatars").publicUrl(path)
+                        }
+                    } catch (e: Exception) {
+                        Log.w("RegistroMoto", "foto upload failed: ${e.message}")
+                    }
+                }
+
                 SupabaseClient.client.postgrest.from("motos").insert(
                     Moto(
                         user_id = userId,
@@ -75,7 +113,8 @@ class RegistroMotoFragment : Fragment() {
                         modelo = modelo,
                         cilindrada = cilindradaStr.toIntOrNull(),
                         placa = placa,
-                        odometro_inicial = odometroStr.toIntOrNull() ?: 0
+                        odometro_inicial = odometroStr.toIntOrNull() ?: 0,
+                        foto_url = fotoUrl
                     )
                 )
 
@@ -92,11 +131,13 @@ class RegistroMotoFragment : Fragment() {
                 toast(getString(R.string.moto_registrada))
                 findNavController().navigate(R.id.navigation_garaje_documentos)
             } catch (e: Exception) {
+                Log.e("RegistroMoto", "insert error: ${e.javaClass.simpleName}: ${e.message}", e)
                 val msg = e.message ?: ""
-                val error = if (msg.contains("unique", true) || msg.contains("duplicate", true))
-                    getString(R.string.error_placa_duplicada)
-                else
-                    getString(R.string.error_inesperado)
+                val error = when {
+                    msg.contains("unique", true) || msg.contains("duplicate", true) ->
+                        getString(R.string.error_placa_duplicada)
+                    else -> getString(R.string.error_inesperado)
+                }
                 toast(error)
                 binding.btnGuardarEmpezar.isEnabled = true
             }

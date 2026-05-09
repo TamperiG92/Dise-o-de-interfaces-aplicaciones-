@@ -33,7 +33,8 @@ data class RtmInsert(
     val numero_certificado: String,
     val nombre_cda: String,
     val fecha_expedicion: String,
-    val fecha_vencimiento: String
+    val fecha_vencimiento: String,
+    val foto_url: String? = null
 )
 
 @Serializable
@@ -42,6 +43,7 @@ data class CombustibleInsert(
     val tipo_gasolina: String,
     val costo: Double,
     val kilometraje: Int,
+    val litros: Double? = null,
     val latitud: Double? = null,
     val longitud: Double? = null
 )
@@ -63,13 +65,44 @@ data class DocumentoInsert(
     val nombre: String,
     val entidad_emisora: String? = null,
     val fecha_vencimiento: String? = null,
-    val recordatorio_activo: Boolean = true
+    val recordatorio_activo: Boolean = true,
+    val archivo_url: String? = null
 )
+
+@Serializable
+data class HistorialItem(
+    val id: String,
+    val moto_id: String,
+    val tipo: String,
+    val created_at: String,
+    val subtipo: String? = null,
+    val valor: String? = null,
+    val kilometraje: Int? = null,
+    val litros: Double? = null
+)
+
+@Serializable data class SoatRecord(val fecha_vencimiento: String)
+@Serializable data class RtmRecord(val fecha_vencimiento: String)
+@Serializable data class MotoOdo(val odometro_inicial: Int)
+@Serializable data class KmRecord(val kilometraje: Int)
 
 @Serializable
 data class UsuarioInfo(
     val id: String,
     val name: String,
     val lastname: String? = null,
-    val correo: String? = null
+    val correo: String? = null,
+    val url_photo: String? = null
+)
+
+@Serializable
+data class UserPreferences(
+    val notificaciones_push: Boolean = true,
+    val alertas_mantenimiento: Boolean = true
+)
+
+@Serializable
+data class DocumentoAlerta(
+    val nombre: String,
+    val fecha_vencimiento: String? = null
 )

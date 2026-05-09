@@ -68,6 +68,7 @@ class CombustibleFragment : Fragment() {
             return
         }
 
+        val litros = binding.etLitros.text.toString().trim().toDoubleOrNull()
         val tipo = tiposGasolinaDb[binding.spinnerGasolina.selectedItemPosition]
 
         binding.btnRegistrar.isEnabled = false
@@ -79,7 +80,8 @@ class CombustibleFragment : Fragment() {
                         moto_id = motoId,
                         tipo_gasolina = tipo,
                         costo = costo,
-                        kilometraje = km
+                        kilometraje = km,
+                        litros = litros
                     )
                 )
                 toast(getString(R.string.combustible_registrado))

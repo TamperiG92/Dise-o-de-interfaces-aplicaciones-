@@ -52,18 +52,7 @@
             app:layout_constraintStart_toStartOf="@+id/lbl_historial_de"
             app:layout_constraintTop_toBottomOf="@+id/lbl_historial_de" />
 
-        <ImageButton
-            android:id="@+id/btn_filter"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@drawable/circulo_oscuro"
-            android:src="@android:drawable/ic_menu_sort_alphabetically"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/white"
-            android:contentDescription="@string/filter_desc" />
-
-        <!-- Summary Cards -->
+        <!-- Summary Cards Row (3 cards) -->
         <LinearLayout
             android:id="@+id/layout_summary_cards"
             android:layout_width="match_parent"
@@ -73,11 +62,12 @@
             android:baselineAligned="false"
             app:layout_constraintTop_toBottomOf="@+id/txt_actividad">
 
+            <!-- Mantenimientos -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="6dp"
                 app:cardBackgroundColor="@color/dark_blue"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp">
@@ -85,35 +75,38 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="12dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_mantenimiento"
                         android:textColor="@color/button_blue"
-                        android:textSize="12sp" />
+                        android:textSize="10sp" />
                     <TextView
+                        android:id="@+id/txt_count_mantenimiento"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="6dp"
                         android:text="@string/label_cero"
                         android:textColor="@color/white"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:textStyle="bold" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_eventos_anio"
                         android:textColor="@color/gris_hint"
-                        android:textSize="10sp" />
+                        android:textSize="9sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Gasto Total -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
                 app:cardBackgroundColor="@color/dark_blue"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp">
@@ -121,29 +114,69 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="12dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_gasto_total"
-                        android:textColor="#FF5722"
-                        android:textSize="12sp" />
+                        android:textColor="@color/orange_secondary"
+                        android:textSize="10sp" />
                     <TextView
+                        android:id="@+id/txt_gasto_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="6dp"
                         android:text="@string/label_vacio_short"
                         android:textColor="@color/white"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:textStyle="bold" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_cop_mes"
                         android:textColor="@color/gris_hint"
-                        android:textSize="10sp" />
+                        android:textSize="9sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <!-- Eficiencia -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                app:cardBackgroundColor="@color/dark_blue"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_eficiencia"
+                        android:textColor="@color/cyan_primary"
+                        android:textSize="10sp" />
+                    <TextView
+                        android:id="@+id/txt_eficiencia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/label_vacio_short"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_kml_promedio"
+                        android:textColor="@color/gris_hint"
+                        android:textSize="9sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
 
         <!-- Tendencia Title -->
@@ -151,69 +184,99 @@
             android:id="@+id/lbl_tendencia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="28dp"
             android:text="@string/label_tendencia_gastos"
             android:textColor="@color/gris_hint"
-            android:textSize="12sp"
+            android:textSize="11sp"
             android:textStyle="bold"
-            android:letterSpacing="0.1"
+            android:letterSpacing="0.08"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_summary_cards" />
 
-        <!-- Chart Placeholder -->
+        <!-- Chart Card -->
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_chart_placeholder"
+            android:id="@+id/card_chart"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginTop="16dp"
-            app:cardBackgroundColor="@android:color/transparent"
+            android:layout_height="180dp"
+            android:layout_marginTop="12dp"
+            app:cardBackgroundColor="@color/dark_blue"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
-            app:strokeColor="#1F3238"
-            app:strokeWidth="1dp"
             app:layout_constraintTop_toBottomOf="@+id/lbl_tendencia">
-            <LinearLayout
+
+            <com.example.rodapp.fragments.HistorialChartView
+                android:id="@+id/chart_gastos"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:alpha="0.3"
-                    android:src="@android:drawable/ic_menu_sort_by_size"
-                    app:tint="@color/white" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/label_sin_datos_mes"
-                    android:textColor="@color/gris_hint"
-                    android:textSize="12sp" />
-            </LinearLayout>
+                android:padding="12dp" />
+
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Central Empty State -->
-        <LinearLayout
+        <!-- Filter Chips -->
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group_filtro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="20dp"
+            app:singleSelection="true"
+            app:layout_constraintTop_toBottomOf="@+id/card_chart">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_todo"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_filtro_todo"
+                android:checked="true" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_combustible"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_combustible" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_mantenimiento"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_mantenimiento" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <!-- Feed de actividad -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_historial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:nestedScrollingEnabled="false"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/chip_group_filtro" />
+
+        <!-- Empty State -->
+        <LinearLayout
+            android:id="@+id/layout_empty_historial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="80dp"
             android:gravity="center"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/card_chart_placeholder"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="100dp">
+            app:layout_constraintTop_toBottomOf="@+id/rv_historial"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                app:cardBackgroundColor="#1A2A30"
-                app:cardCornerRadius="24dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:cardBackgroundColor="@color/dark_blue"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="0dp">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="24dp"
+                    android:padding="20dp"
                     android:src="@android:drawable/ic_menu_today"
                     app:tint="@color/button_blue"
                     android:contentDescription="@string/empty_calendar_desc" />
@@ -222,10 +285,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/label_no_actividad"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -235,7 +298,7 @@
                 android:gravity="center"
                 android:text="@string/label_no_actividad_desc"
                 android:textColor="@color/gris_hint"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.rodapp.SupabaseClient
+import com.example.rodapp.activities.main.AdminActivity
 import com.example.rodapp.activities.main.MainActivity
 import com.example.rodapp.databinding.ActivityLoginBinding
 import io.github.jan.supabase.auth.auth
@@ -16,7 +17,13 @@ import io.github.jan.supabase.auth.handleDeeplinks
 import io.github.jan.supabase.auth.providers.Google
 import io.github.jan.supabase.auth.providers.builtin.Email
 import io.github.jan.supabase.auth.status.SessionStatus
+import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonPrimitive
+
+@Serializable
+private data class UserRole(val role: String)
 
 class login : AppCompatActivity() {
 
@@ -109,11 +116,42 @@ class login : AppCompatActivity() {
     }
 
     private fun navigateToMain() {
-        val intent = Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        lifecycleScope.launch {
+            val targetClass = try {
+                val authUser = SupabaseClient.client.auth.currentUserOrNull()
+                val uid = authUser?.id ?: ""
+
+                val existing = SupabaseClient.client.postgrest.from("users")
+                    .select {
+                        filter { eq("id", uid) }
+                        limit(1L)
+                    }
+                    .decodeList<UserRole>()
+
+                if (existing.isEmpty()) {
+                    // Primer login OAuth (Google, etc.) — crear fila en users
+                    val email = authUser?.email ?: ""
+                    val meta = authUser?.userMetadata
+                    val name = (meta?.get("full_name") as? JsonPrimitive)?.content
+                        ?: (meta?.get("name") as? JsonPrimitive)?.content
+                        ?: email.substringBefore("@")
+                    SupabaseClient.client.postgrest.from("users").insert(
+                        UserProfile(id = uid, name = name, lastname = "", correo = email)
+                    )
+                    MainActivity::class.java
+                } else {
+                    if (existing.first().role == "admin") AdminActivity::class.java
+                    else MainActivity::class.java
+                }
+            } catch (_: Exception) {
+                MainActivity::class.java
+            }
+            val intent = Intent(this@login, targetClass).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            startActivity(intent)
+            finish()
         }
-        startActivity(intent)
-        finish()
     }
 
     private fun mapAuthError(e: Exception): String {

@@ -23,6 +23,7 @@
             android:backgroundTint="@color/surface_variant" />
 
         <TextView
+            android:id="@+id/txt_moto_nombre_inicio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -195,6 +196,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
                 <View
+                    android:id="@+id/dot_soat_estado"
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:background="@drawable/design_snackbar_background"
@@ -213,6 +215,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ic_soat" />
                 <TextView
+                    android:id="@+id/txt_soat_estado"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_vigente"
@@ -246,6 +249,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
                 <View
+                    android:id="@+id/dot_rtm_estado"
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:background="@drawable/design_snackbar_background"
@@ -264,6 +268,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ic_rtm" />
                 <TextView
+                    android:id="@+id/txt_rtm_estado"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_vigente"
@@ -288,17 +293,20 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ll_docs_row" />
-        
+
     <TextView
+        android:id="@+id/txt_ver_historial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_ver_historial"
         android:textColor="@color/cyan_primary"
         android:textSize="12sp"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/lbl_act" />
 
-    <!-- Listado Actividad -->
+    <!-- Actividad reciente -->
     <LinearLayout
         android:id="@+id/ll_list"
         android:layout_width="match_parent"
@@ -309,8 +317,24 @@
         app:layout_constraintTop_toBottomOf="@id/lbl_act"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <include layout="@layout/row_actividad_lleno" />
-        
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_actividad_reciente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txt_sin_actividad_inicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/label_no_actividad_desc"
+            android:textColor="@color/gris_hint"
+            android:textSize="13sp"
+            android:visibility="gone" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

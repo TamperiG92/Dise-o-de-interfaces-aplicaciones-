@@ -1,78 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingVertical="12dp"
-    android:paddingHorizontal="16dp"
-    android:background="@color/black_background">
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginBottom="8dp"
+    app:cardBackgroundColor="@color/surface_card"
+    app:cardCornerRadius="12dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="#14FFFFFF">
 
-    <!-- Avatar Circle -->
-    <TextView
-        android:id="@+id/tv_avatar_initials"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/design_snackbar_background"
-        android:backgroundTint="#0A3A40"
-        android:gravity="center"
-        android:text="@string/placeholder_initials"
-        android:textColor="@color/cyan_primary"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-    <!-- User Name -->
-    <TextView
-        android:id="@+id/tv_user_name"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        tools:text="Julian Diaz"
-        android:textColor="@color/text_light"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/tv_avatar_initials"
-        app:layout_constraintEnd_toStartOf="@+id/tv_motorcycle"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:padding="16dp">
 
-    <!-- Motorcycle -->
-    <TextView
-        android:id="@+id/tv_motorcycle"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        tools:text="MT-09 SP"
-        android:textColor="@color/text_gray"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@id/tv_user_name"
-        app:layout_constraintEnd_toStartOf="@+id/dot_1"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        <!-- Avatar Circle -->
+        <TextView
+            android:id="@+id/tv_avatar_initials"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/circle_background"
+            android:backgroundTint="#0A3A40"
+            android:gravity="center"
+            android:textColor="@color/cyan_primary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="JD"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Docs Indicator -->
-    <View
-        android:id="@+id/dot_1"
-        android:layout_width="8dp"
-        android:layout_height="8dp"
-        android:layout_marginEnd="6dp"
-        android:background="@drawable/design_snackbar_background"
-        android:backgroundTint="@color/cyan_primary"
-        app:layout_constraintEnd_toStartOf="@+id/dot_2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        <!-- Role Badge -->
+        <TextView
+            android:id="@+id/tv_role_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            android:background="@drawable/badge_background"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.08"
+            tools:text="ADMIN"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/dot_2"
-        android:layout_width="8dp"
-        android:layout_height="8dp"
-        android:background="@drawable/design_snackbar_background"
-        android:backgroundTint="@color/cyan_primary"
-        tools:backgroundTint="@color/alert_red"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        <!-- Name -->
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="Julián Díaz Martínez"
+            app:layout_constraintStart_toEndOf="@id/tv_avatar_initials"
+            app:layout_constraintEnd_toStartOf="@id/tv_role_badge"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Email -->
+        <TextView
+            android:id="@+id/tv_correo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/gris_hint"
+            android:textSize="12sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="julian.diaz@email.com"
+            app:layout_constraintStart_toEndOf="@id/tv_avatar_initials"
+            app:layout_constraintEnd_toStartOf="@id/tv_role_badge"
+            app:layout_constraintTop_toBottomOf="@id/tv_user_name" />
+
+        <!-- Barrier: sits below whichever is taller: avatar or email -->
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="tv_avatar_initials,tv_correo" />
+
+        <!-- Divider -->
+        <View
+            android:id="@+id/view_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="14dp"
+            android:background="#1AFFFFFF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barrier_content" />
+
+        <!-- Role Change Button (bottom-left) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_change_role"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginTop="12dp"
+            android:textSize="11sp"
+            android:textColor="@color/cyan_primary"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:strokeColor="@color/cyan_primary"
+            app:cornerRadius="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_delete"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintTop_toBottomOf="@id/view_divider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="Degradar" />
+
+        <!-- Delete Button (bottom-right) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_delete"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:textSize="11sp"
+            android:text="@string/btn_eliminar"
+            android:textColor="@color/alert_red"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:icon="@drawable/ic_delete"
+            app:iconSize="14dp"
+            app:iconTint="@color/alert_red"
+            app:strokeColor="@color/alert_red"
+            app:cornerRadius="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_change_role"
+            app:layout_constraintTop_toTopOf="@id/btn_change_role"
+            app:layout_constraintBottom_toBottomOf="@id/btn_change_role" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

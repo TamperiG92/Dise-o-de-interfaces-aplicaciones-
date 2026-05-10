@@ -225,6 +225,8 @@
     <string name="hint_notas_mantenimiento">Marca de aceite, costo, nombre del taller, observaciones...</string>
 
     <!-- Historial Additions -->
+    <string name="label_todas_motos">Todas</string>
+    <string name="label_resumen_motos">RESUMEN POR MOTO</string>
     <string name="label_tendencia_gastos">TENDENCIA DE GASTOS (6 meses)</string>
     <string name="label_sin_datos_mes">Sin datos registrados</string>
     <string name="label_no_actividad">No tienes actividad registrada</string>
@@ -250,16 +252,16 @@
     <string name="label_seleccionar_fecha">Seleccionar fecha</string>
 
     <!-- Admin Panel -->
-    <string name="hint_search_users">Search by name or motorcycle...</string>
-    <string name="title_active_users">Active Users</string>
-    <string name="btn_filter_caps">FILTER</string>
-    <string name="header_user_name">USER NAME</string>
-    <string name="header_motorcycle">MOTORCYCLE</string>
-    <string name="header_docs">DOCS</string>
-    <string name="label_total_users">TOTAL USERS</string>
-    <string name="label_alerts_caps">ALERTS</string>
-    <string name="placeholder_total_users">1,284</string>
-    <string name="placeholder_alerts">42</string>
+    <string name="hint_search_users">Buscar por nombre o correo…</string>
+    <string name="title_active_users">Usuarios Registrados</string>
+    <string name="btn_filter_caps">FILTRAR</string>
+    <string name="header_user_name">USUARIO</string>
+    <string name="header_motorcycle">CORREO</string>
+    <string name="header_docs">ROL</string>
+    <string name="label_total_users">TOTAL USUARIOS</string>
+    <string name="label_alerts_caps">ADMINS</string>
+    <string name="placeholder_total_users">—</string>
+    <string name="placeholder_alerts">—</string>
     <string name="placeholder_initials">JD</string>
 
     <!-- Historial -->
@@ -311,6 +313,43 @@
     <string name="label_sin_fecha_recordatorio">Agrega una fecha de vencimiento para activar el recordatorio</string>
     <string name="label_adjunto_guardado">Archivo adjunto guardado</string>
     <string name="label_foto_moto">Foto de la moto</string>
+
+    <!-- Admin Panel actualizado -->
+    <string name="label_panel_admin">Panel de Administrador</string>
+    <string name="label_dashboard">Dashboard</string>
+    <string name="label_admin_usuarios">Usuarios</string>
+    <string name="label_admin_actividad">Actividad</string>
+    <string name="label_stat_usuarios">USUARIOS TOTALES</string>
+    <string name="label_stat_motos">MOTOS REGISTRADAS</string>
+    <string name="label_stat_combustible">REGISTROS COMBUSTIBLE</string>
+    <string name="label_stat_mantenimientos">MANTENIMIENTOS</string>
+    <string name="label_resumen_plataforma">RESUMEN DE LA PLATAFORMA</string>
+    <string name="label_rol_admin">ADMIN</string>
+    <string name="label_rol_cliente">CLIENTE</string>
+    <string name="btn_promover_admin">Promover</string>
+    <string name="btn_degradar_cliente">Degradar</string>
+    <string name="dialog_cambiar_rol_title">Cambiar Rol</string>
+    <string name="dialog_promover_msg">¿Deseas promover a %s a Administrador?</string>
+    <string name="dialog_degradar_msg">¿Deseas degradar a %s a Cliente?</string>
+    <string name="msg_rol_actualizado">Rol actualizado</string>
+    <string name="msg_error_cambio_rol">Error al cambiar el rol. Verifica permisos.</string>
+    <string name="label_usuarios_activos">Usuarios Registrados</string>
+    <string name="label_actividad_proxima">Próximamente</string>
+    <string name="label_actividad_proxima_desc">El historial de actividad de la plataforma\nestar&#225; disponible pronto.</string>
+    <string name="label_cargando">Cargando…</string>
+    <string name="label_sin_usuarios">No se pudieron cargar los usuarios.\nVerifica los permisos en Supabase.</string>
+
+    <!-- Admin Panel - Eliminar y Filtrar -->
+    <string name="btn_eliminar">Eliminar</string>
+    <string name="dialog_eliminar_usuario_title">Eliminar usuario</string>
+    <string name="dialog_eliminar_msg">¿Estás seguro de que deseas eliminar a %s? Esta acción eliminará todos sus datos y no se puede deshacer.</string>
+    <string name="msg_usuario_eliminado">Usuario eliminado</string>
+    <string name="msg_error_eliminar_usuario">Error al eliminar el usuario. Verifica permisos.</string>
+    <string name="title_filtrar_usuarios">Filtrar por rol</string>
+    <string name="filtro_todos">Todos los usuarios</string>
+    <string name="filtro_solo_admins">Solo administradores</string>
+    <string name="filtro_solo_clientes">Solo clientes</string>
+    <string name="cd_btn_delete_user">Eliminar usuario</string>
 
     <!-- Mapa -->
     <string name="hint_buscar_lugar">Buscar talleres, gasolineras, parqueaderos…</string>

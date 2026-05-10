@@ -6,80 +6,22 @@
     android:layout_height="match_parent"
     android:background="@color/black_background">
 
-    <!-- App Bar Top -->
-    <LinearLayout
-        android:id="@+id/top_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toTopOf="parent">
-        
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@android:drawable/ic_menu_sort_by_size"
-            app:tint="@color/cyan_primary" />
-            
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="R O D A P P"
-            android:textColor="@color/cyan_primary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.2"/>
-            
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@android:drawable/ic_menu_camera"
-            android:background="@drawable/design_snackbar_background"
-            android:backgroundTint="@color/surface_stroke"/>
-    </LinearLayout>
-
-    <!-- Search Input -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/search_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        app:boxBackgroundColor="@color/black_background"
-        app:boxStrokeColor="@color/surface_stroke"
-        app:boxCornerRadiusTopStart="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusBottomEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:startIconDrawable="@android:drawable/ic_menu_search"
-        app:startIconTint="@color/text_dark_slate"
-        app:layout_constraintTop_toBottomOf="@id/top_bar" >
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_search_users"
-            android:textColorHint="@color/text_dark_slate"
-            android:textColor="@color/text_light"
-            android:textSize="14sp"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Header Section -->
+    <!-- Section title -->
     <TextView
         android:id="@+id/tv_section_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:text="@string/title_active_users"
-        android:textColor="@color/text_light"
-        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/search_layout"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_filter" />
 
+    <!-- Filter button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_filter"
         android:layout_width="wrap_content"
@@ -88,67 +30,58 @@
         android:text="@string/btn_filter_caps"
         android:textSize="10sp"
         android:textColor="@color/cyan_primary"
+        android:minWidth="0dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         app:backgroundTint="@color/surface_card"
         app:cornerRadius="8dp"
         app:icon="@android:drawable/ic_menu_sort_by_size"
         app:iconTint="@color/cyan_primary"
         app:iconSize="14dp"
+        app:strokeColor="#22FFFFFF"
+        app:strokeWidth="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_section_title"
-        app:layout_constraintBottom_toBottomOf="@id/tv_section_title"/>
+        app:layout_constraintBottom_toBottomOf="@id/tv_section_title" />
 
-    <!-- Table Header Text -->
-    <LinearLayout
-        android:id="@+id/table_header"
+    <!-- Search Input -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/search_layout"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        android:background="#132328"
-        android:paddingVertical="12dp"
-        android:paddingHorizontal="16dp"
-        android:orientation="horizontal"
+        android:layout_marginTop="12dp"
+        app:boxBackgroundColor="@color/surface_card"
+        app:boxStrokeColor="#22FFFFFF"
+        app:boxCornerRadiusTopStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:startIconDrawable="@android:drawable/ic_menu_search"
+        app:startIconTint="@color/gris_hint"
         app:layout_constraintTop_toBottomOf="@id/tv_section_title">
-        
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/header_user_name"
-            android:textSize="10sp"
-            android:textColor="@color/text_dark_slate"
-            android:textStyle="bold"
-            android:letterSpacing="0.1"/>
-            
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="@string/header_motorcycle"
-            android:textSize="10sp"
-            android:textColor="@color/text_dark_slate"
-            android:textStyle="bold"
-            android:letterSpacing="0.1"/>
-            
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:text="@string/header_docs"
-            android:textSize="10sp"
-            android:textColor="@color/text_dark_slate"
-            android:textStyle="bold"
-            android:letterSpacing="0.1"/>
-    </LinearLayout>
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_search_users"
+            android:textColorHint="@color/gris_hint"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- User list -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_users"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="16dp"
-        android:paddingBottom="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:clipToPadding="false"
-        android:background="#111B1E"
-        app:layout_constraintTop_toBottomOf="@id/table_header"
-        app:layout_constraintBottom_toTopOf="@id/bottom_cards_container"/>
+        android:background="@color/black_background"
+        app:layout_constraintTop_toBottomOf="@id/search_layout"
+        app:layout_constraintBottom_toTopOf="@id/bottom_cards_container" />
 
     <!-- Bottom summary cards -->
     <LinearLayout
@@ -163,39 +96,36 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="6dp"
             app:cardBackgroundColor="@color/surface_card"
             app:cardCornerRadius="12dp"
-            app:strokeWidth="0dp">
-            
-            <View
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:background="@color/cyan_primary"/>
-                
+            app:strokeWidth="1dp"
+            app:strokeColor="#1AFFFFFF">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp">
-                
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_total_users"
                     android:textSize="10sp"
-                    android:textColor="@color/text_dark_slate"
+                    android:textColor="@color/gris_hint"
                     android:textStyle="bold"
-                    android:letterSpacing="0.1"/>
-                    
+                    android:letterSpacing="0.1" />
+
                 <TextView
+                    android:id="@+id/tv_total_users_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="@string/placeholder_total_users"
-                    android:textSize="22sp"
-                    android:textColor="@color/text_light"
-                    android:textStyle="bold"/>
+                    android:text="@string/label_cargando"
+                    android:textSize="26sp"
+                    android:textColor="@color/cyan_primary"
+                    android:textStyle="bold" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -203,39 +133,36 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="6dp"
             app:cardBackgroundColor="@color/surface_card"
             app:cardCornerRadius="12dp"
-            app:strokeWidth="0dp">
-            
-            <View
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:background="@color/alert_red"/>
-                
+            app:strokeWidth="1dp"
+            app:strokeColor="#1AFFFFFF">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp">
-                
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_alerts_caps"
                     android:textSize="10sp"
-                    android:textColor="@color/text_dark_slate"
+                    android:textColor="@color/gris_hint"
                     android:textStyle="bold"
-                    android:letterSpacing="0.1"/>
-                    
+                    android:letterSpacing="0.1" />
+
                 <TextView
+                    android:id="@+id/tv_admin_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="@string/placeholder_alerts"
-                    android:textSize="22sp"
+                    android:text="@string/label_cargando"
+                    android:textSize="26sp"
                     android:textColor="@color/alert_red"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>

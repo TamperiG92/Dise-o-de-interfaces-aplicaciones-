@@ -63,6 +63,25 @@
             </LinearLayout>
         </LinearLayout>
 
+        <!-- Moto Selector -->
+        <HorizontalScrollView
+            android:id="@+id/scroll_moto_selector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:scrollbars="none"
+            android:visibility="gone">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_motos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                app:singleSelection="true" />
+
+        </HorizontalScrollView>
+
         <!-- Summary Cards Row -->
         <LinearLayout
             android:id="@+id/layout_summary_cards"
@@ -185,6 +204,27 @@
             </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
+
+        <!-- Resumen por moto -->
+        <TextView
+            android:id="@+id/lbl_resumen_motos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/label_resumen_motos"
+            android:textColor="@color/gris_hint"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.08"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_motos_resumen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:nestedScrollingEnabled="false"
+            android:visibility="gone" />
 
         <!-- Tendencia Title -->
         <TextView

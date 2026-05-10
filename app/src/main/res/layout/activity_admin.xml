@@ -7,10 +7,30 @@
     android:background="@color/black_background"
     tools:context=".activities.main.AdminActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/admin_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_blue"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/admin_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/dark_blue"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:navigationIconTint="@color/cyan_primary"
+            app:title="@string/label_panel_admin"
+            app:titleTextColor="@color/white"
+            app:titleTextAppearance="@style/TextAppearance.Material3.TitleMedium" />
+    </com.google.android.material.appbar.AppBarLayout>
+
     <FrameLayout
         android:id="@+id/admin_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_marginBottom="80dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

@@ -25,6 +25,7 @@ import com.example.rodapp.R
 import com.example.rodapp.SupabaseClient
 import com.example.rodapp.activities.auth.login
 import com.example.rodapp.databinding.ActivityMainBinding
+import com.example.rodapp.activities.main.AdminActivity
 import com.example.rodapp.workers.DocumentAlertWorker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.github.jan.supabase.auth.auth
@@ -36,6 +37,9 @@ import java.util.concurrent.TimeUnit
 
 @Serializable
 private data class UserRowCheck(val id: String)
+
+@Serializable
+private data class UserRoleCheck(val role: String? = null)
 
 @Serializable
 private data class UserInsert(
@@ -61,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         ensureUserProfile()
+        loadUserRole()
         crearCanalNotificaciones()
         pedirPermisoNotificaciones()
         programarAlertasVencimiento()
@@ -78,11 +83,18 @@ class MainActivity : AppCompatActivity() {
         binding.navView.setupWithNavController(navController)
         binding.bottomNavigation.setupWithNavController(navController)
 
+        binding.navView.menu.findItem(R.id.nav_admin_panel)?.isVisible = false
+
         binding.navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_logout -> {
                     binding.drawerLayout.closeDrawers()
                     confirmarCerrarSesion()
+                    true
+                }
+                R.id.nav_admin_panel -> {
+                    binding.drawerLayout.closeDrawers()
+                    startActivity(Intent(this, AdminActivity::class.java))
                     true
                 }
                 else -> {
@@ -131,6 +143,19 @@ class MainActivity : AppCompatActivity() {
             ExistingPeriodicWorkPolicy.KEEP,
             work
         )
+    }
+
+    private fun loadUserRole() {
+        lifecycleScope.launch {
+            try {
+                val uid = SupabaseClient.client.auth.currentUserOrNull()?.id ?: return@launch
+                val result = SupabaseClient.client.postgrest.from("users")
+                    .select { filter { eq("id", uid) }; limit(1L) }
+                    .decodeList<UserRoleCheck>()
+                val isAdmin = result.firstOrNull()?.role == "admin"
+                binding.navView.menu.findItem(R.id.nav_admin_panel)?.isVisible = isAdmin
+            } catch (_: Exception) { }
+        }
     }
 
     private fun ensureUserProfile() {

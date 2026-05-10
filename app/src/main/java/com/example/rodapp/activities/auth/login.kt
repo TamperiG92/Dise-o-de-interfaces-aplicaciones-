@@ -9,7 +9,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.rodapp.SupabaseClient
-import com.example.rodapp.activities.main.AdminActivity
 import com.example.rodapp.activities.main.MainActivity
 import com.example.rodapp.databinding.ActivityLoginBinding
 import io.github.jan.supabase.auth.auth
@@ -23,7 +22,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonPrimitive
 
 @Serializable
-private data class UserRole(val role: String)
+private data class UserRole(val role: String? = null)
 
 class login : AppCompatActivity() {
 
@@ -138,11 +137,8 @@ class login : AppCompatActivity() {
                     SupabaseClient.client.postgrest.from("users").insert(
                         UserProfile(id = uid, name = name, lastname = "", correo = email)
                     )
-                    MainActivity::class.java
-                } else {
-                    if (existing.first().role == "admin") AdminActivity::class.java
-                    else MainActivity::class.java
                 }
+                MainActivity::class.java
             } catch (_: Exception) {
                 MainActivity::class.java
             }

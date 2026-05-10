@@ -21,6 +21,10 @@
     <item android:title="Cuenta">
         <menu>
             <item
+                android:id="@+id/nav_admin_panel"
+                android:icon="@android:drawable/ic_menu_manage"
+                android:title="@string/label_panel_admin" />
+            <item
                 android:id="@+id/nav_logout"
                 android:icon="@android:drawable/ic_lock_power_off"
                 android:title="@string/btn_logout" />

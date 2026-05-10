@@ -109,3 +109,19 @@ data class DocumentoAlerta(
     val nombre: String,
     val fecha_vencimiento: String? = null
 )
+
+@Serializable
+data class AdminUserInfo(
+    val id: String,
+    val name: String,
+    val lastname: String? = null,
+    val correo: String? = null,
+    val role: String? = null
+)
+
+data class MotoResumen(
+    val moto: Moto,
+    val gastoTotal: Double,
+    val eficiencia: Double,
+    val totalMantenimientos: Int
+)

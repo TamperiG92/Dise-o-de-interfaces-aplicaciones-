@@ -58,7 +58,7 @@ All fragments live in `app/src/main/java/com/example/rodapp/fragments/`.
 **Bottom nav destinations** (top-level, no back arrow):
 - `InicioFragment` — dashboard with FAB menu for quick fuel/maintenance entry
 - `GarajeFragment` — empty state; navigates to `RegistroMotoFragment` to add a bike, then `GarajeDocumentosFragment`
-- `MapaFragment` — OSMDroid map
+- `MapaFragment` — Google Maps SDK + Places API (búsqueda de talleres/lugares cercanos)
 - `HistorialFragment` — activity history
 - `PerfilFragment` — user settings and logout
 
@@ -114,11 +114,12 @@ All UI text is in Spanish (Colombia). Every string must be defined in `res/value
 ### Dependencies
 
 - **Navigation:** `androidx.navigation:navigation-fragment-ktx` + `navigation-ui-ktx`
-- **Map:** `org.osmdroid:osmdroid-android:6.1.18`
+- **Map:** `play-services-maps:19.0.0` + `places:4.0.0` + `play-services-location:21.3.0`
 - **UI:** Material 3 (`com.google.android.material`), ConstraintLayout, NestedScrollView
 - **Preferences:** `androidx.preference:preference-ktx`
+- **Backend:** Supabase (`postgrest`, `auth`, `storage`) + Ktor Android client + `kotlinx-serialization-json`
 
-There is currently **no backend/database layer** — no Room, Retrofit, or Supabase dependencies are present in the build yet.
+The Google Maps API key must be set as `MAPS_API_KEY` in `local.properties` (gitignored). See `docs/SETUP_MAPAS.md` for setup instructions and Google Cloud key restrictions.
 
 ### External Reference Guidelines
 **NOTICE** The file **BASE_PROJECT_CONTEXT.md** serves as a supplementary technical reference and pattern library from a parallel academic project. It should be treated as a "blueprint of possibilities" for implementing infrastructure 

@@ -67,6 +67,10 @@ class GarajeDocumentosFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
         viewLifecycleOwner.lifecycleScope.launch { cargarEstadoDocumentos() }
     }
 

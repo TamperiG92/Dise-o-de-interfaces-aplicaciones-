@@ -7,11 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.rodapp.R
 import com.example.rodapp.SharedViewModel
 import com.example.rodapp.SupabaseClient
 import com.example.rodapp.databinding.FragmentHistorialBinding
 import com.example.rodapp.models.HistorialItem
+import com.google.android.material.snackbar.Snackbar
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.postgrest.query.Order
 import kotlinx.coroutines.launch
@@ -25,7 +29,8 @@ class HistorialFragment : Fragment() {
     private val binding get() = _binding!!
     private val sharedVm: SharedViewModel by activityViewModels()
 
-    private var allItems: List<HistorialItem> = emptyList()
+    private var allItems: MutableList<HistorialItem> = mutableListOf()
+    private var currentAdapter: HistorialAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,8 +45,54 @@ class HistorialFragment : Fragment() {
         binding.rvHistorial.layoutManager = object : LinearLayoutManager(requireContext()) {
             override fun canScrollVertically() = false
         }
+        configurarSwipeDelete()
         setupChips()
         cargarHistorial()
+    }
+
+    private fun configurarSwipeDelete() {
+        val swipeCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            override fun onMove(rv: RecyclerView, vh: RecyclerView.ViewHolder, t: RecyclerView.ViewHolder) = false
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = currentAdapter ?: return
+                val position = viewHolder.bindingAdapterPosition
+                val item = adapter.removeAt(position)
+
+                // Eliminar del filtro actual también
+                val indexAll = allItems.indexOfFirst { it.id == item.id }
+                if (indexAll >= 0) allItems.removeAt(indexAll)
+
+                Snackbar.make(binding.root, getString(R.string.label_registro_eliminado), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.label_deshacer)) {
+                        // Restaurar en adapter
+                        adapter.restoreAt(item, position)
+                        if (indexAll >= 0) allItems.add(indexAll, item)
+                        actualizarStats()
+                        actualizarGrafica()
+                    }
+                    .addCallback(object : Snackbar.Callback() {
+                        override fun onDismissed(snackbar: Snackbar, event: Int) {
+                            if (event != DISMISS_EVENT_ACTION) {
+                                ejecutarDelete(item)
+                            }
+                        }
+                    })
+                    .show()
+            }
+        }
+        ItemTouchHelper(swipeCallback).attachToRecyclerView(binding.rvHistorial)
+    }
+
+    private fun ejecutarDelete(item: HistorialItem) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                val tabla = if (item.tipo.lowercase() == "combustible")
+                    "registros_combustible" else "registros_mantenimiento"
+                SupabaseClient.client.postgrest.from(tabla)
+                    .delete { filter { eq("id", item.id) } }
+            } catch (_: Exception) { }
+        }
     }
 
     private fun setupChips() {
@@ -60,7 +111,7 @@ class HistorialFragment : Fragment() {
         val filtrados = when (filtro) {
             "combustible" -> allItems.filter { it.tipo == "combustible" }
             "mantenimiento" -> allItems.filter { it.tipo == "mantenimiento" }
-            else -> allItems
+            else -> allItems.toList()
         }
         actualizarLista(filtrados)
     }
@@ -76,7 +127,7 @@ class HistorialFragment : Fragment() {
                         order("created_at", Order.DESCENDING)
                         limit(100L)
                     }
-                    .decodeList<HistorialItem>()
+                    .decodeList<HistorialItem>().toMutableList()
 
                 if (_binding == null) return@launch
 
@@ -151,8 +202,11 @@ class HistorialFragment : Fragment() {
         if (items.isEmpty()) {
             binding.rvHistorial.visibility = View.GONE
             binding.layoutEmptyHistorial.visibility = View.VISIBLE
+            currentAdapter = null
         } else {
-            binding.rvHistorial.adapter = HistorialAdapter(items)
+            val adapter = HistorialAdapter(items.toMutableList()) { _, _ -> }
+            currentAdapter = adapter
+            binding.rvHistorial.adapter = adapter
             binding.rvHistorial.visibility = View.VISIBLE
             binding.layoutEmptyHistorial.visibility = View.GONE
         }

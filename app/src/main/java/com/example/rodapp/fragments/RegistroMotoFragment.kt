@@ -88,6 +88,7 @@ class RegistroMotoFragment : Fragment() {
 
         Log.d("RegistroMoto", "userId=$userId, placa=$placa, marca=$marca, modelo=$modelo")
         binding.btnGuardarEmpezar.isEnabled = false
+        binding.progressGuardando.visibility = View.VISIBLE
 
         viewLifecycleOwner.lifecycleScope.launch {
             try {
@@ -140,6 +141,7 @@ class RegistroMotoFragment : Fragment() {
                 }
                 toast(error)
                 binding.btnGuardarEmpezar.isEnabled = true
+                binding.progressGuardando.visibility = View.GONE
             }
         }
     }

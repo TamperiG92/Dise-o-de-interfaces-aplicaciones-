@@ -52,12 +52,24 @@
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/spinner_tipo_mantenimiento"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_tipo_mantenimiento"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/texto_usuario" />
+                android:text="@string/label_seleccionar_tipos"
+                android:textAllCaps="false"
+                android:textColor="@color/gris_hint"
+                android:textSize="14sp"
+                android:gravity="start|center_vertical"
+                android:paddingStart="16dp"
+                app:backgroundTint="@android:color/transparent"
+                app:strokeColor="@color/surface_stroke"
+                app:strokeWidth="1dp"
+                app:cornerRadius="8dp"
+                app:icon="@android:drawable/ic_menu_manage"
+                app:iconTint="@color/gris_hint"
+                app:iconGravity="end" />
 
             <EditText
                 android:id="@+id/et_fecha"

@@ -35,8 +35,12 @@
     <string-array name="tipos_gasolina">
         <item>Regular</item>
         <item>Premium</item>
-        <item>Diésel</item>
         <item>Extra</item>
+    </string-array>
+
+    <string-array name="tipos_licencia">
+        <item>A1</item>
+        <item>A2</item>
     </string-array>
 
     <string-array name="tipos_mantenimiento">

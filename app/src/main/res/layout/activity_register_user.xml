@@ -24,6 +24,18 @@
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/white" />
 
+        <ImageView
+            android:id="@+id/logo_register"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/logo"
+            android:contentDescription="Logo RodApp"
+            app:tint="@color/button_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_back" />
+
         <TextView
             android:id="@+id/title_crear_cuenta"
             android:layout_width="wrap_content"

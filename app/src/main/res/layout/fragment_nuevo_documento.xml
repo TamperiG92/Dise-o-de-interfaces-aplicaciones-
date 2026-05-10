@@ -63,16 +63,39 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lbl_personalizar" />
 
+        <!-- Spinner tipo licencia (solo visible para LICENCIA) -->
+        <TextView
+            android:id="@+id/lbl_tipo_licencia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/label_tipo_licencia"
+            android:textColor="@color/button_blue"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/subtitle_personalizar" />
+
+        <Spinner
+            android:id="@+id/spinner_tipo_licencia"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/texto_usuario"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_tipo_licencia" />
+
         <TextView
             android:id="@+id/lbl_nombre_doc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:text="Nombre del documento"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/subtitle_personalizar" />
+            app:layout_constraintTop_toBottomOf="@+id/spinner_tipo_licencia" />
 
         <EditText
             android:id="@+id/et_nombre_doc"
@@ -182,6 +205,7 @@
                         android:textSize="12sp" />
                 </LinearLayout>
                 <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switch_recordatorio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true" />

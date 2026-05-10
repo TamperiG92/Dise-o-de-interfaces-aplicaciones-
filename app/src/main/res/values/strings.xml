@@ -58,7 +58,7 @@
     <string name="lbl_aseguradora">Aseguradora</string>
     <string name="lbl_inicio_vigencia">Inicio vigencia</string>
     <string name="lbl_vencimiento">Vencimiento</string>
-    <string name="hint_fecha">mm/dd/yyyy</string>
+    <string name="hint_fecha">dd/mm/yyyy</string>
     <string name="info_soat">Asegúrate de que los datos coincidan exactamente con tu documento físico o digital para recibir alertas precisas.</string>
     <string name="btn_guardar_doc">Guardar Documento</string>
     <string name="paso_soat">PASO 1 DE 2: INFORMACIÓN BÁSICA</string>
@@ -297,4 +297,26 @@
     <string name="notif_rtm_titulo">RTM próxima a vencer</string>
     <string name="notif_doc_titulo">Documento próximo a vencer</string>
     <string name="notif_cuerpo_vence">%1$s — vence el %2$s</string>
+
+    <!-- Ajustes 2026-05-09 -->
+    <string name="hint_fecha_ddmmyyyy">dd/mm/yyyy</string>
+    <string name="label_tipo_licencia">TIPO DE LICENCIA</string>
+    <string name="hint_aseguradora_seguro">Ej. Sura, Bolívar, Liberty…</string>
+    <string name="label_registrada">REGISTRADA</string>
+    <string name="label_seleccionar_tipos">Seleccionar tipos…</string>
+    <string name="label_deshacer">Deshacer</string>
+    <string name="label_registro_eliminado">Registro eliminado</string>
+    <string name="label_calendario_recordatorio">Vencimiento %s</string>
+    <string name="label_recordatorio_creado">Recordatorio en Google Calendar abierto</string>
+    <string name="label_sin_fecha_recordatorio">Agrega una fecha de vencimiento para activar el recordatorio</string>
+    <string name="label_adjunto_guardado">Archivo adjunto guardado</string>
+    <string name="label_foto_moto">Foto de la moto</string>
+
+    <!-- Mapa -->
+    <string name="hint_buscar_lugar">Buscar talleres, gasolineras, parqueaderos…</string>
+    <string name="label_cerrado">CERRADO</string>
+    <string name="label_sin_horario">SIN HORARIO</string>
+    <string name="error_busqueda_mapa">No se encontraron resultados</string>
+    <string name="error_places_api">Error al buscar. Verifica tu conexión</string>
+    <string name="label_permiso_ubicacion">Activa los permisos de ubicación para usar el mapa</string>
 </resources>

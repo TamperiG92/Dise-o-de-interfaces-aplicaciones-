@@ -7,42 +7,42 @@
     android:background="@color/black_background"
     tools:context=".fragments.MapaFragment">
 
-    <!-- El Mapa Real (OSMDroid) -->
-    <org.osmdroid.views.MapView
-        android:id="@+id/mapview"
+    <!-- Contenedor del mapa (SupportMapFragment se agrega aquí programáticamente) -->
+    <FrameLayout
+        android:id="@+id/map_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!-- Pseudo Top Bar -->
-    <LinearLayout
-        android:layout_width="match_parent"
+    <!-- Barra de búsqueda flotante sobre el mapa -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_search"
+        style="@style/Widget.Material3.TextInputLayout.FilledBox"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingTop="32dp"
-        android:paddingBottom="16dp"
-        android:paddingHorizontal="24dp"
-        android:background="#D9101F22"
-        app:layout_constraintTop_toTopOf="parent">
-        
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@android:drawable/ic_menu_revert"
-            app:tint="@color/text_light" />
-            
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:text="@string/label_mapa"
-            android:textColor="@color/text_light"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+        android:layout_marginTop="48dp"
+        android:layout_marginHorizontal="16dp"
+        app:startIconDrawable="@android:drawable/ic_menu_search"
+        app:startIconTint="@color/cyan_primary"
+        app:boxBackgroundColor="@color/surface_card"
+        app:hintTextColor="@color/gris_hint"
+        app:boxStrokeColor="@color/cyan_primary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- Botón Mi Ubicación sobre el Mapa -->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_buscar_lugar"
+            android:textColor="@color/white"
+            android:textColorHint="@color/gris_hint"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Botón Mi Ubicación -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_location"
         android:layout_width="wrap_content"
@@ -56,20 +56,22 @@
         app:layout_constraintBottom_toTopOf="@+id/card_detalle"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Tarjeta Inferior Taller (Over the map) -->
+    <!-- Tarjeta de detalle del lugar (oculta por defecto) -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_detalle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="90dp"
+        android:visibility="gone"
         app:cardBackgroundColor="@color/surface_card"
         app:cardCornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:strokeColor="@color/surface_stroke"
-        app:strokeWidth="1dp">
+        app:strokeWidth="1dp"
+        tools:visibility="visible">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -95,24 +97,29 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:text="@string/label_taller_ejemplo"
                 android:textColor="@color/text_light"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="Taller MotoTech"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/img_taller"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/tv_address"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/label_ubicacion_ejemplo"
                 android:textColor="@color/text_gray"
                 android:textSize="12sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="Calle 63 #13-45, Bogotá"
                 app:layout_constraintTop_toBottomOf="@id/tv_title"
-                app:layout_constraintStart_toStartOf="@id/tv_title" />
+                app:layout_constraintStart_toStartOf="@id/tv_title"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/tv_state"
@@ -123,10 +130,10 @@
                 android:backgroundTint="@color/surface_success"
                 android:paddingHorizontal="6dp"
                 android:paddingVertical="2dp"
-                android:text="@string/label_abierto"
                 android:textColor="@color/cyan_primary"
                 android:textSize="10sp"
                 android:textStyle="bold"
+                tools:text="ABIERTO"
                 app:layout_constraintTop_toBottomOf="@id/tv_address"
                 app:layout_constraintStart_toStartOf="@id/tv_title" />
 
@@ -134,13 +141,14 @@
                 android:id="@+id/tv_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_rating_ejemplo"
                 android:textColor="@color/cyan_primary"
                 android:textSize="12sp"
                 android:textStyle="bold"
+                tools:text="4.5 ★"
                 app:layout_constraintTop_toTopOf="@id/tv_state"
                 app:layout_constraintBottom_toBottomOf="@id/tv_state"
                 app:layout_constraintEnd_toEndOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 

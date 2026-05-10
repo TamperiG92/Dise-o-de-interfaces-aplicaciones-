@@ -74,6 +74,13 @@ class InicioFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        // Garantizar estado limpio del FAB al volver de cualquier pantalla
+        if (_binding != null) {
+            binding.fabMain.visibility = View.VISIBLE
+            binding.fabMenu.visibility = View.GONE
+            binding.fabMain.setImageResource(android.R.drawable.ic_input_add)
+            isMenuOpen = false
+        }
         viewLifecycleOwner.lifecycleScope.launch { cargarDashboard() }
     }
 
@@ -156,7 +163,7 @@ class InicioFragment : Fragment() {
                 lleno.rvActividadReciente.visibility = View.GONE
                 lleno.txtSinActividadInicio.visibility = View.VISIBLE
             } else {
-                lleno.rvActividadReciente.adapter = HistorialAdapter(items)
+                lleno.rvActividadReciente.adapter = HistorialAdapter(items.toMutableList()) { _, _ -> }
                 lleno.rvActividadReciente.visibility = View.VISIBLE
                 lleno.txtSinActividadInicio.visibility = View.GONE
             }

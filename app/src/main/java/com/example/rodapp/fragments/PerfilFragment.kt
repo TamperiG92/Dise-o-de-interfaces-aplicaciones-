@@ -1,5 +1,10 @@
 package com.example.rodapp.fragments
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,6 +22,7 @@ import com.example.rodapp.SharedViewModel
 import com.example.rodapp.SupabaseClient
 import com.example.rodapp.activities.main.MainActivity
 import com.example.rodapp.databinding.FragmentPerfilBinding
+import com.example.rodapp.models.Moto
 import com.example.rodapp.models.UserPreferences
 import com.example.rodapp.models.UsuarioInfo
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -27,6 +33,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
+import java.io.ByteArrayOutputStream
 
 @Serializable private data class UserPhotoUpdate(val url_photo: String)
 @Serializable private data class NotifPushUpdate(val notificaciones_push: Boolean)
@@ -58,6 +65,9 @@ class PerfilFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Mostrar cache local inmediatamente mientras carga desde Supabase
+        cargarDesdeCache()
+
         binding.btnBackPerfil.setOnClickListener { findNavController().navigateUp() }
 
         binding.btnLogout.setOnClickListener {
@@ -83,6 +93,22 @@ class PerfilFragment : Fragment() {
 
         sharedVm.motoNombre?.let { binding.txtMotoPerfil.text = it }
         viewLifecycleOwner.lifecycleScope.launch { cargarUsuario() }
+    }
+
+    private fun cargarDesdeCache() {
+        val prefs = requireContext().getSharedPreferences("perfil_cache", Context.MODE_PRIVATE)
+        val nombre = prefs.getString("nombre", null)
+        val correo = prefs.getString("correo", null)
+        if (!nombre.isNullOrEmpty()) binding.txtNombrePerfil.text = nombre
+        if (!correo.isNullOrEmpty()) binding.txtCorreoValor.text = correo
+    }
+
+    private fun guardarEnCache(nombre: String, correo: String) {
+        requireContext().getSharedPreferences("perfil_cache", Context.MODE_PRIVATE)
+            .edit()
+            .putString("nombre", nombre)
+            .putString("correo", correo)
+            .apply()
     }
 
     private fun configurarSwitches() {
@@ -126,6 +152,7 @@ class PerfilFragment : Fragment() {
 
             binding.txtNombrePerfil.text = usuario.name
             binding.txtCorreoValor.text = usuario.correo ?: ""
+            guardarEnCache(usuario.name, usuario.correo ?: "")
 
             prefs?.let {
                 binding.switchPush.isChecked = it.notificaciones_push
@@ -133,8 +160,22 @@ class PerfilFragment : Fragment() {
             }
             prefsLoaded = true
 
+            // Cargar foto de perfil
             usuario.url_photo?.takeIf { it.isNotEmpty() }?.let { url ->
                 cargarFotoDesdeUrl(url)
+            }
+
+            // Cargar foto de la moto en el header
+            val motoId = sharedVm.motoId
+            if (motoId != null) {
+                val moto = SupabaseClient.client.postgrest.from("motos")
+                    .select { filter { eq("id", motoId) }; limit(1L) }
+                    .decodeList<Moto>().firstOrNull()
+                moto?.foto_url?.takeIf { it.isNotEmpty() }?.let { fotoMoto ->
+                    if (_binding != null && usuario.url_photo.isNullOrEmpty()) {
+                        cargarFotoDesdeUrl(fotoMoto)
+                    }
+                }
             }
         } catch (_: Exception) {
             if (_binding != null) prefsLoaded = true
@@ -145,7 +186,7 @@ class PerfilFragment : Fragment() {
         try {
             val bitmap = withContext(Dispatchers.IO) {
                 java.net.URL(url).openStream().use { stream ->
-                    android.graphics.BitmapFactory.decodeStream(stream)
+                    BitmapFactory.decodeStream(stream)
                 }
             }
             if (_binding != null && bitmap != null) {
@@ -159,19 +200,30 @@ class PerfilFragment : Fragment() {
     private fun subirFotoPerfil(uri: Uri) {
         val userId = SupabaseClient.client.auth.currentUserOrNull()?.id ?: return
         binding.fabCameraPerfil.isEnabled = false
-        binding.imgPerfil.setImageURI(uri)
-        binding.imgPerfil.imageTintList = null
-        binding.imgPerfil.setPadding(0, 0, 0, 0)
 
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val bytes = requireContext().contentResolver
-                    .openInputStream(uri)?.use { it.readBytes() } ?: return@launch
+                val bytes = withContext(Dispatchers.IO) {
+                    requireContext().contentResolver.openInputStream(uri)?.use { inputStream ->
+                        val raw = inputStream.readBytes()
+                        corregirRotacion(uri, raw)
+                    }
+                } ?: return@launch
+
+                // Mostrar preview local
+                if (_binding != null) {
+                    val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                    binding.imgPerfil.setImageBitmap(bmp)
+                    binding.imgPerfil.imageTintList = null
+                    binding.imgPerfil.setPadding(0, 0, 0, 0)
+                }
+
                 val path = "$userId/perfil.jpg"
                 SupabaseClient.client.storage.from("avatars").upload(path, bytes) { upsert = true }
                 val url = SupabaseClient.client.storage.from("avatars").publicUrl(path)
                 SupabaseClient.client.postgrest.from("users")
                     .update(UserPhotoUpdate(url)) { filter { eq("id", userId) } }
+                guardarEnCache(binding.txtNombrePerfil.text.toString(), binding.txtCorreoValor.text.toString())
                 toast(getString(R.string.foto_actualizada))
             } catch (_: Exception) {
                 toast(getString(R.string.error_inesperado))
@@ -179,6 +231,30 @@ class PerfilFragment : Fragment() {
                 if (_binding != null) binding.fabCameraPerfil.isEnabled = true
             }
         }
+    }
+
+    private fun corregirRotacion(uri: Uri, rawBytes: ByteArray): ByteArray {
+        return try {
+            requireContext().contentResolver.openInputStream(uri)?.use { stream ->
+                val exif = ExifInterface(stream)
+                val orientation = exif.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL
+                )
+                val rotation = when (orientation) {
+                    ExifInterface.ORIENTATION_ROTATE_90 -> 90f
+                    ExifInterface.ORIENTATION_ROTATE_180 -> 180f
+                    ExifInterface.ORIENTATION_ROTATE_270 -> 270f
+                    else -> 0f
+                }
+                if (rotation == 0f) return rawBytes
+                val bmp = BitmapFactory.decodeByteArray(rawBytes, 0, rawBytes.size) ?: return rawBytes
+                val matrix = Matrix().apply { postRotate(rotation) }
+                val rotated = Bitmap.createBitmap(bmp, 0, 0, bmp.width, bmp.height, matrix, true)
+                val out = ByteArrayOutputStream()
+                rotated.compress(Bitmap.CompressFormat.JPEG, 90, out)
+                out.toByteArray()
+            } ?: rawBytes
+        } catch (_: Exception) { rawBytes }
     }
 
     private fun toast(msg: String) = Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()

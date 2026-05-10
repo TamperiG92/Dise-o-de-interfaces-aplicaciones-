@@ -26,6 +26,8 @@
                 android:background="@color/background_blue"
                 app:navigationIcon="@android:drawable/ic_menu_sort_by_size"
                 app:navigationIconTint="@color/button_blue"
+                app:logo="@drawable/logo"
+                app:logoScaleType="fitCenter"
                 app:title="" />
 
         </com.google.android.material.appbar.AppBarLayout>

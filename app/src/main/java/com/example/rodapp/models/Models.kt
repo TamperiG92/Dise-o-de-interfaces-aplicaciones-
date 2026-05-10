@@ -18,13 +18,15 @@ data class Moto(
     val activa: Boolean = true
 )
 
+@OptIn(ExperimentalSerializationApi::class)
 @Serializable
 data class SoatInsert(
     val moto_id: String,
     val numero_poliza: String,
     val aseguradora: String,
     val fecha_inicio: String,
-    val fecha_vencimiento: String
+    val fecha_vencimiento: String,
+    @EncodeDefault(EncodeDefault.Mode.NEVER) val foto_url: String? = null
 )
 
 @Serializable
@@ -103,6 +105,7 @@ data class UserPreferences(
 
 @Serializable
 data class DocumentoAlerta(
+    val tipo: String = "",
     val nombre: String,
     val fecha_vencimiento: String? = null
 )

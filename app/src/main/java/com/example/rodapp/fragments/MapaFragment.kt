@@ -2,8 +2,10 @@ package com.example.rodapp.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +19,7 @@ import androidx.fragment.app.Fragment
 import com.example.rodapp.BuildConfig
 import com.example.rodapp.R
 import com.example.rodapp.databinding.FragmentMapaBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -46,6 +49,7 @@ class MapaFragment : Fragment(), OnMapReadyCallback {
     private lateinit var placesClient: PlacesClient
     private var currentLocation: LatLng = LatLng(4.6097, -74.0817)
     private val activeMarkers = mutableListOf<Marker>()
+    private var selectedPlace: Place? = null
 
     private val locationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -212,6 +216,7 @@ class MapaFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun showPlaceDetail(place: Place) {
+        selectedPlace = place
         binding.cardDetalle.visibility = View.VISIBLE
         binding.tvTitle.text = place.displayName ?: getString(R.string.label_taller_ejemplo)
         binding.tvAddress.text = place.formattedAddress ?: getString(R.string.label_ubicacion_ejemplo)
@@ -224,11 +229,61 @@ class MapaFragment : Fragment(), OnMapReadyCallback {
             false -> getString(R.string.label_cerrado)
             else -> getString(R.string.label_sin_horario)
         }
+        binding.btnComoLlegar.setOnClickListener {
+            val loc = place.location ?: return@setOnClickListener
+            navigateTo(loc.latitude, loc.longitude, place.displayName ?: "")
+        }
+    }
+
+    private fun navigateTo(lat: Double, lng: Double, name: String) {
+        val hasMaps = isAppInstalled(PKG_MAPS)
+        val hasWaze = isAppInstalled(PKG_WAZE)
+        when {
+            hasMaps && hasWaze -> showNavigationChooser(lat, lng, name)
+            hasMaps -> openGoogleMaps(lat, lng)
+            hasWaze -> openWaze(lat, lng)
+            else -> openBrowserFallback(lat, lng)
+        }
+    }
+
+    private fun showNavigationChooser(lat: Double, lng: Double, name: String) {
+        val options = arrayOf(getString(R.string.label_google_maps), getString(R.string.label_waze))
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.label_abrir_con)
+            .setItems(options) { _, which ->
+                if (which == 0) openGoogleMaps(lat, lng) else openWaze(lat, lng)
+            }
+            .show()
+    }
+
+    private fun openGoogleMaps(lat: Double, lng: Double) {
+        val uri = Uri.parse("google.navigation:q=$lat,$lng")
+        startActivity(Intent(Intent.ACTION_VIEW, uri).setPackage(PKG_MAPS))
+    }
+
+    private fun openWaze(lat: Double, lng: Double) {
+        val uri = Uri.parse("waze://?ll=$lat,$lng&navigate=yes")
+        startActivity(Intent(Intent.ACTION_VIEW, uri).setPackage(PKG_WAZE))
+    }
+
+    private fun openBrowserFallback(lat: Double, lng: Double) {
+        val uri = Uri.parse("https://www.google.com/maps/dir/?api=1&destination=$lat,$lng")
+        startActivity(Intent(Intent.ACTION_VIEW, uri))
+    }
+
+    private fun isAppInstalled(packageName: String): Boolean {
+        return try {
+            requireContext().packageManager.getPackageInfo(packageName, 0)
+            true
+        } catch (e: PackageManager.NameNotFoundException) {
+            false
+        }
     }
 
     private fun clearMarkers() {
         activeMarkers.forEach { it.remove() }
         activeMarkers.clear()
+        selectedPlace = null
         binding.cardDetalle.visibility = View.GONE
     }
 
@@ -248,6 +303,8 @@ class MapaFragment : Fragment(), OnMapReadyCallback {
         private const val SEARCH_RADIUS_METERS = 5000.0
         private const val MAX_RESULTS = 10
         private const val BOUNDS_PADDING = 120
+        private const val PKG_MAPS = "com.google.android.apps.maps"
+        private const val PKG_WAZE = "com.waze"
 
         private val PLACE_FIELDS = listOf(
             Place.Field.ID,

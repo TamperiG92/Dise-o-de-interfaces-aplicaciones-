@@ -15,11 +15,13 @@ import com.example.rodapp.SupabaseClient
 import com.example.rodapp.databinding.FragmentGarajeDocumentosBinding
 import com.example.rodapp.models.RtmRecord
 import com.example.rodapp.models.SoatRecord
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.postgrest.query.Order
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 
 class GarajeDocumentosFragment : Fragment() {
 
@@ -118,12 +120,16 @@ class GarajeDocumentosFragment : Fragment() {
     private fun actualizarBadge(fechaVenc: String?, today: LocalDate, soat: Boolean) {
         val badge = if (soat) binding.badgeEstadoSoat else binding.badgeEstadoRtm
         val txtVenc = if (soat) binding.txtVencSoat else binding.txtVencRtm
+        val progressBar = if (soat) binding.progressSoat else binding.progressRtm
+        val txtDias = if (soat) binding.txtDiasSoat else binding.txtDiasRtm
 
         if (fechaVenc == null) {
             badge.text = getString(R.string.label_sin_registro)
             badge.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_gray))
             badge.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.surface_stroke)
             txtVenc.text = if (soat) getString(R.string.label_soat_full) else getString(R.string.label_rtm_completo)
+            progressBar.visibility = View.GONE
+            txtDias.visibility = View.GONE
             return
         }
 
@@ -140,6 +146,32 @@ class GarajeDocumentosFragment : Fragment() {
             badge.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.alert_red)
         }
         txtVenc.text = getString(R.string.label_vence_hasta, fechaVenc)
+
+        if (venc != null) {
+            val diasRestantes = ChronoUnit.DAYS.between(today, venc).toInt().coerceAtLeast(0)
+            actualizarProgress(progressBar, txtDias, diasRestantes)
+        }
+    }
+
+    private fun actualizarProgress(bar: LinearProgressIndicator, txtDias: android.widget.TextView, dias: Int) {
+        bar.visibility = View.VISIBLE
+        txtDias.visibility = View.VISIBLE
+
+        val colorRes = when {
+            dias > 90 -> R.color.cyan_primary
+            dias > 30 -> R.color.warning_yellow
+            else -> R.color.alert_red
+        }
+        val color = ContextCompat.getColor(requireContext(), colorRes)
+        bar.setIndicatorColor(color)
+        bar.setProgressCompat(dias.coerceAtMost(365), true)
+
+        txtDias.text = when (dias) {
+            0 -> getString(R.string.label_vencido)
+            1 -> getString(R.string.label_un_dia_restante)
+            else -> getString(R.string.label_dias_restantes, dias)
+        }
+        txtDias.setTextColor(color)
     }
 
     override fun onDestroyView() {

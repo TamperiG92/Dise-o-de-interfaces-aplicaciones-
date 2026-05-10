@@ -319,4 +319,10 @@
     <string name="error_busqueda_mapa">No se encontraron resultados</string>
     <string name="error_places_api">Error al buscar. Verifica tu conexión</string>
     <string name="label_permiso_ubicacion">Activa los permisos de ubicación para usar el mapa</string>
+    <string name="label_dias_restantes">%d días restantes</string>
+    <string name="label_un_dia_restante">1 día restante</string>
+    <string name="label_como_llegar">Cómo llegar</string>
+    <string name="label_abrir_con">Abrir con…</string>
+    <string name="label_google_maps">Google Maps</string>
+    <string name="label_waze">Waze</string>
 </resources>

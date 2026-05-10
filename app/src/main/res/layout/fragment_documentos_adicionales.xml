@@ -103,6 +103,7 @@
                         app:layout_constraintStart_toEndOf="@+id/icon_licencia"
                         app:layout_constraintTop_toTopOf="@+id/icon_licencia" />
                     <TextView
+                        android:id="@+id/lbl_licencia_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_permiso_conducir_desc"
@@ -110,6 +111,17 @@
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="@+id/lbl_licencia"
                         app:layout_constraintTop_toBottomOf="@+id/lbl_licencia" />
+                    <TextView
+                        android:id="@+id/txt_venc_licencia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/gris_hint"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="@+id/lbl_licencia"
+                        app:layout_constraintTop_toBottomOf="@+id/lbl_licencia_desc"
+                        tools:text="Vence: 2026-08-15" />
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_add_licencia"
                         android:layout_width="40dp"
@@ -141,9 +153,40 @@
                         android:textSize="10sp"
                         android:textStyle="bold"
                         android:visibility="gone"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/lbl_licencia"
-                        app:layout_constraintTop_toBottomOf="@+id/lbl_licencia" />
+                        app:layout_constraintTop_toBottomOf="@+id/txt_venc_licencia" />
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/progress_licencia"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="12dp"
+                        android:max="365"
+                        android:progress="0"
+                        android:visibility="gone"
+                        app:trackThickness="5dp"
+                        app:trackCornerRadius="3dp"
+                        app:trackColor="@color/surface_stroke"
+                        app:indicatorColor="@color/cyan_primary"
+                        app:layout_constraintTop_toBottomOf="@id/badge_licencia"
+                        app:layout_constraintStart_toStartOf="@id/lbl_licencia"
+                        app:layout_constraintEnd_toStartOf="@id/btn_add_licencia" />
+                    <TextView
+                        android:id="@+id/txt_dias_licencia"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginBottom="2dp"
+                        android:gravity="end"
+                        android:textSize="10sp"
+                        android:textColor="@color/gris_hint"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@id/progress_licencia"
+                        app:layout_constraintStart_toStartOf="@id/lbl_licencia"
+                        app:layout_constraintEnd_toStartOf="@id/btn_add_licencia"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        tools:text="180 días restantes" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -186,6 +229,7 @@
                         app:layout_constraintStart_toEndOf="@+id/icon_todo_riesgo"
                         app:layout_constraintTop_toTopOf="@+id/icon_todo_riesgo" />
                     <TextView
+                        android:id="@+id/lbl_todo_riesgo_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_todo_riesgo_desc"
@@ -193,6 +237,17 @@
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="@+id/lbl_todo_riesgo"
                         app:layout_constraintTop_toBottomOf="@+id/lbl_todo_riesgo" />
+                    <TextView
+                        android:id="@+id/txt_venc_seguro"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/gris_hint"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="@+id/lbl_todo_riesgo"
+                        app:layout_constraintTop_toBottomOf="@+id/lbl_todo_riesgo_desc"
+                        tools:text="Vence: 2026-11-01" />
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_add_todo_riesgo"
                         android:layout_width="40dp"
@@ -224,9 +279,40 @@
                         android:textSize="10sp"
                         android:textStyle="bold"
                         android:visibility="gone"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/lbl_todo_riesgo"
-                        app:layout_constraintTop_toBottomOf="@+id/lbl_todo_riesgo" />
+                        app:layout_constraintTop_toBottomOf="@+id/txt_venc_seguro" />
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/progress_seguro"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="12dp"
+                        android:max="365"
+                        android:progress="0"
+                        android:visibility="gone"
+                        app:trackThickness="5dp"
+                        app:trackCornerRadius="3dp"
+                        app:trackColor="@color/surface_stroke"
+                        app:indicatorColor="@color/cyan_primary"
+                        app:layout_constraintTop_toBottomOf="@id/badge_seguro"
+                        app:layout_constraintStart_toStartOf="@id/lbl_todo_riesgo"
+                        app:layout_constraintEnd_toStartOf="@id/btn_add_todo_riesgo" />
+                    <TextView
+                        android:id="@+id/txt_dias_seguro"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginBottom="2dp"
+                        android:gravity="end"
+                        android:textSize="10sp"
+                        android:textColor="@color/gris_hint"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@id/progress_seguro"
+                        app:layout_constraintStart_toStartOf="@id/lbl_todo_riesgo"
+                        app:layout_constraintEnd_toStartOf="@id/btn_add_todo_riesgo"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        tools:text="90 días restantes" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 

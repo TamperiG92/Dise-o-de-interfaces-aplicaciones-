@@ -39,6 +39,11 @@ class HistorialAdapter(
                 R.color.orange_secondary,
                 item.subtipo ?: ctx.getString(R.string.label_mantenimiento)
             )
+            "ruta" -> Triple(
+                android.R.drawable.ic_menu_directions,
+                R.color.success_green,
+                item.subtipo ?: ctx.getString(R.string.label_ruta)
+            )
             else -> Triple(
                 android.R.drawable.ic_menu_agenda,
                 R.color.button_blue,

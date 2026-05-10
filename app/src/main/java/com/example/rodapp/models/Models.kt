@@ -87,6 +87,18 @@ data class HistorialItem(
 @Serializable data class RtmRecord(val fecha_vencimiento: String)
 @Serializable data class MotoOdo(val odometro_inicial: Int)
 @Serializable data class KmRecord(val kilometraje: Int)
+@Serializable data class AceiteRecord(val kilometraje: Int, val repetir_cada_km: Int? = null)
+
+@Serializable
+data class RutaInsert(
+    val moto_id: String,
+    val km_inicio: Int,
+    val km_fin: Int,
+    val distancia_m: Int,
+    val duracion_s: Int
+)
+
+@Serializable data class KmRutaRecord(val km_fin: Int)
 
 @Serializable
 data class UsuarioInfo(

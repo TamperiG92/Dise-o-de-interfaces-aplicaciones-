@@ -1,9 +1,13 @@
 package com.example.rodapp.fragments
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -14,12 +18,17 @@ import com.example.rodapp.R
 import com.example.rodapp.SharedViewModel
 import com.example.rodapp.SupabaseClient
 import com.example.rodapp.databinding.FragmentInicioBinding
+import com.example.rodapp.models.AceiteRecord
 import com.example.rodapp.models.HistorialItem
 import com.example.rodapp.models.KmRecord
+import com.example.rodapp.models.KmRutaRecord
 import com.example.rodapp.models.Moto
 import com.example.rodapp.models.MotoOdo
 import com.example.rodapp.models.RtmRecord
+import com.example.rodapp.models.RutaInsert
 import com.example.rodapp.models.SoatRecord
+import com.example.rodapp.services.RodandoEstado
+import com.example.rodapp.services.RodandoService
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.postgrest.query.Order
@@ -33,6 +42,13 @@ class InicioFragment : Fragment() {
     private val sharedVm: SharedViewModel by activityViewModels()
 
     private var isMenuOpen = false
+    private var kmActualMoto = 0
+
+    private val locationPermLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) iniciarRuta()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,11 +86,44 @@ class InicioFragment : Fragment() {
 
         binding.llenoContent.rvActividadReciente.layoutManager =
             LinearLayoutManager(requireContext())
+
+        binding.llenoContent.btnIniciarRuta.setOnClickListener {
+            if (hasLocationPermission()) iniciarRuta()
+            else locationPermLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+
+        binding.llenoContent.btnFinalizarRuta.setOnClickListener { finalizarRuta() }
+
+        observarEstadoRuta()
+    }
+
+    private fun observarEstadoRuta() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            RodandoEstado.activa.collect { activa ->
+                if (_binding == null) return@collect
+                val lleno = binding.llenoContent
+                lleno.btnIniciarRuta.visibility = if (activa) View.GONE else View.VISIBLE
+                lleno.cardEnRuta.visibility = if (activa) View.VISIBLE else View.GONE
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            RodandoEstado.distanciaMetros.collect { metros ->
+                if (_binding == null) return@collect
+                val kmStr = "%.1f".format(metros / 1000f)
+                binding.llenoContent.txtKmRuta.text =
+                    getString(R.string.label_km_recorridos, kmStr)
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            RodandoEstado.tiempoSegundos.collect { secs ->
+                if (_binding == null) return@collect
+                binding.llenoContent.txtTimerRuta.text = formatTiempo(secs)
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        // Garantizar estado limpio del FAB al volver de cualquier pantalla
         if (_binding != null) {
             binding.fabMain.visibility = View.VISIBLE
             binding.fabMenu.visibility = View.GONE
@@ -115,16 +164,26 @@ class InicioFragment : Fragment() {
         val lleno = binding.llenoContent
         sharedVm.motoNombre?.let { lleno.txtMotoNombreInicio.text = it }
 
+        var km = 0
         try {
             val odo = SupabaseClient.client.postgrest.from("motos")
                 .select { filter { eq("id", motoId) }; limit(1L) }
                 .decodeList<MotoOdo>().firstOrNull()
 
-            val ultimoKm = SupabaseClient.client.postgrest.from("registros_combustible")
+            val ultimoKmComb = SupabaseClient.client.postgrest.from("registros_combustible")
                 .select { filter { eq("moto_id", motoId) }; order("kilometraje", Order.DESCENDING); limit(1L) }
                 .decodeList<KmRecord>().firstOrNull()
 
-            val km = ultimoKm?.kilometraje ?: odo?.odometro_inicial ?: 0
+            val ultimoKmRuta = SupabaseClient.client.postgrest.from("registros_ruta")
+                .select { filter { eq("moto_id", motoId) }; order("km_fin", Order.DESCENDING); limit(1L) }
+                .decodeList<KmRutaRecord>().firstOrNull()
+
+            km = maxOf(
+                ultimoKmComb?.kilometraje ?: 0,
+                ultimoKmRuta?.km_fin ?: 0,
+                odo?.odometro_inicial ?: 0
+            )
+            kmActualMoto = km
             lleno.tvKm.text = getString(R.string.label_km_con_valor, km)
 
             val today = LocalDate.now()
@@ -143,7 +202,52 @@ class InicioFragment : Fragment() {
             actualizarEstado(rtm?.fecha_vencimiento, today, lleno.txtRtmEstado, lleno.dotRtmEstado)
         } catch (_: Exception) { }
 
+        cargarEstadoAceite(motoId, km)
         cargarActividadReciente(motoId)
+    }
+
+    private fun iniciarRuta() {
+        if (sharedVm.motoId == null) return
+        RodandoEstado.kmInicio = kmActualMoto
+        requireContext().startForegroundService(
+            Intent(requireContext(), RodandoService::class.java)
+        )
+    }
+
+    private fun finalizarRuta() {
+        val distanciaM = RodandoEstado.distanciaMetros.value.toInt()
+        val duracionS = RodandoEstado.tiempoSegundos.value.toInt()
+        val kmInicio = RodandoEstado.kmInicio
+        requireContext().stopService(Intent(requireContext(), RodandoService::class.java))
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            val motoId = sharedVm.motoId ?: return@launch
+            try {
+                val kmFin = kmInicio + (distanciaM / 1000)
+                SupabaseClient.client.postgrest.from("registros_ruta").insert(
+                    RutaInsert(
+                        moto_id = motoId,
+                        km_inicio = kmInicio,
+                        km_fin = kmFin,
+                        distancia_m = distanciaM,
+                        duracion_s = duracionS
+                    )
+                )
+            } catch (_: Exception) { }
+            cargarDashboard()
+        }
+    }
+
+    private fun hasLocationPermission() =
+        ContextCompat.checkSelfPermission(
+            requireContext(), Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+
+    private fun formatTiempo(segundos: Long): String {
+        val h = segundos / 3600
+        val m = (segundos % 3600) / 60
+        val s = segundos % 60
+        return "%02d:%02d:%02d".format(h, m, s)
     }
 
     private suspend fun cargarActividadReciente(motoId: String) {
@@ -166,6 +270,63 @@ class InicioFragment : Fragment() {
                 lleno.rvActividadReciente.adapter = HistorialAdapter(items.toMutableList()) { _, _ -> }
                 lleno.rvActividadReciente.visibility = View.VISIBLE
                 lleno.txtSinActividadInicio.visibility = View.GONE
+            }
+        } catch (_: Exception) { }
+    }
+
+    private suspend fun cargarEstadoAceite(motoId: String, kmActual: Int) {
+        try {
+            val aceite = SupabaseClient.client.postgrest.from("registros_mantenimiento")
+                .select {
+                    filter {
+                        eq("moto_id", motoId)
+                        ilike("tipo", "%aceite%")
+                    }
+                    order("kilometraje", Order.DESCENDING)
+                    limit(1L)
+                }
+                .decodeList<AceiteRecord>().firstOrNull()
+
+            if (_binding == null) return
+            val lleno = binding.llenoContent
+
+            if (aceite == null) {
+                lleno.txtAceiteEstado.text = getString(R.string.label_sin_registro)
+                lleno.txtAceiteEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_gray))
+                lleno.progressAceite.progress = 0
+                return
+            }
+
+            val intervalo = aceite.repetir_cada_km
+            if (intervalo == null || intervalo <= 0) {
+                val kmDesde = (kmActual - aceite.kilometraje).coerceAtLeast(0)
+                lleno.txtAceiteEstado.text = getString(R.string.label_aceite_km_desde, kmDesde)
+                lleno.txtAceiteEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_gray))
+                lleno.progressAceite.progress = 0
+                return
+            }
+
+            val kmDesde = (kmActual - aceite.kilometraje).coerceAtLeast(0)
+            val progreso = ((kmDesde.toFloat() / intervalo) * 100).toInt().coerceIn(0, 100)
+            val kmRestantes = intervalo - kmDesde
+            lleno.progressAceite.progress = progreso
+
+            when {
+                kmRestantes <= 0 -> {
+                    lleno.txtAceiteEstado.text = getString(R.string.label_aceite_pendiente)
+                    lleno.txtAceiteEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.alert_red))
+                    lleno.progressAceite.progressTintList = ContextCompat.getColorStateList(requireContext(), R.color.alert_red)
+                }
+                kmRestantes <= 500 -> {
+                    lleno.txtAceiteEstado.text = getString(R.string.label_aceite_km_restantes, kmRestantes)
+                    lleno.txtAceiteEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.warning_yellow))
+                    lleno.progressAceite.progressTintList = ContextCompat.getColorStateList(requireContext(), R.color.warning_yellow)
+                }
+                else -> {
+                    lleno.txtAceiteEstado.text = getString(R.string.label_aceite_km_restantes, kmRestantes)
+                    lleno.txtAceiteEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.cyan_primary))
+                    lleno.progressAceite.progressTintList = ContextCompat.getColorStateList(requireContext(), R.color.cyan_primary)
+                }
             }
         } catch (_: Exception) { }
     }

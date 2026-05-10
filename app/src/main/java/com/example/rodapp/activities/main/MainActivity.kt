@@ -26,6 +26,7 @@ import com.example.rodapp.SupabaseClient
 import com.example.rodapp.activities.auth.login
 import com.example.rodapp.databinding.ActivityMainBinding
 import com.example.rodapp.activities.main.AdminActivity
+import com.example.rodapp.services.RodandoService
 import com.example.rodapp.workers.DocumentAlertWorker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.github.jan.supabase.auth.auth
@@ -108,14 +109,24 @@ class MainActivity : AppCompatActivity() {
 
     private fun crearCanalNotificaciones() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val canal = NotificationChannel(
-                DocumentAlertWorker.CHANNEL_ID,
-                getString(R.string.notif_channel_name),
-                NotificationManager.IMPORTANCE_DEFAULT
-            ).apply {
-                description = getString(R.string.notif_channel_desc)
-            }
-            getSystemService(NotificationManager::class.java).createNotificationChannel(canal)
+            val nm = getSystemService(NotificationManager::class.java)
+            nm.createNotificationChannel(
+                NotificationChannel(
+                    DocumentAlertWorker.CHANNEL_ID,
+                    getString(R.string.notif_channel_name),
+                    NotificationManager.IMPORTANCE_DEFAULT
+                ).apply { description = getString(R.string.notif_channel_desc) }
+            )
+            nm.createNotificationChannel(
+                NotificationChannel(
+                    RodandoService.CHANNEL_ID,
+                    getString(R.string.notif_rodando_canal),
+                    NotificationManager.IMPORTANCE_LOW
+                ).apply {
+                    description = getString(R.string.notif_rodando_canal_desc)
+                    setShowBadge(false)
+                }
+            )
         }
     }
 

@@ -351,6 +351,21 @@
     <string name="filtro_solo_clientes">Solo clientes</string>
     <string name="cd_btn_delete_user">Eliminar usuario</string>
 
+    <!-- Iniciar a rodar / GPS tracking -->
+    <string name="label_iniciar_ruta">Iniciar a rodar</string>
+    <string name="label_en_ruta">EN RUTA</string>
+    <string name="label_finalizar_ruta">Finalizar ruta</string>
+    <string name="label_km_recorridos">%s km recorridos</string>
+    <string name="label_ruta">Ruta</string>
+    <string name="notif_rodando_titulo">RodApp — En ruta</string>
+    <string name="notif_rodando_canal">Seguimiento de ruta</string>
+    <string name="notif_rodando_canal_desc">Notificación activa mientras hay una ruta en curso</string>
+
+    <!-- Cambio de aceite -->
+    <string name="label_aceite_km_restantes">%d km restantes</string>
+    <string name="label_aceite_pendiente">CAMBIO PENDIENTE</string>
+    <string name="label_aceite_km_desde">%d km desde último</string>
+
     <!-- Mapa -->
     <string name="hint_buscar_lugar">Buscar talleres, gasolineras, parqueaderos…</string>
     <string name="label_cerrado">CERRADO</string>

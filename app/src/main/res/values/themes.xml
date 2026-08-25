@@ -23,6 +23,22 @@
 
     <style name="Theme.RodApp.PopupOverlay" parent="ThemeOverlay.Material3.Light" />
 
+    <!-- Custom Dialog Theme -->
+    <style name="CustomAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorSurface">@color/dark_blue</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="buttonBarPositiveButtonStyle">@style/CustomButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/CustomButtonStyleNegative</item>
+    </style>
+
+    <style name="CustomButtonStyle" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/button_blue</item>
+    </style>
+
+    <style name="CustomButtonStyleNegative" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/gris_hint</item>
+    </style>
+
     <!-- Section Header Style -->
     <style name="SectionHeaderStyle">
         <item name="android:layout_width">wrap_content</item>

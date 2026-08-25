@@ -96,11 +96,23 @@
         android:label="MapaFragment"
         tools:layout="@layout/fragment_mapa"/>
 
+    <!-- ADMIN: Dashboard de Usuarios -->
     <fragment
-        android:id="@+id/documentoDetalleFragment"
-        android:name="com.example.rodapp.fragments.DocumentoDetalleFragment"
-        android:label="Detalle de Documento"
-        tools:layout="@layout/fragment_documento_detalle" />
+        android:id="@+id/navigation_admin_dashboard"
+        android:name="com.example.rodapp.fragments.AdminUsersFragment"
+        android:label="Dashboard Admin"
+        tools:layout="@layout/fragment_admin_users" >
+        <action
+            android:id="@+id/action_adminUsersFragment_to_adminUserDetailFragment"
+            app:destination="@id/navigation_admin_user_detail" />
+    </fragment>
+
+    <!-- ADMIN: Detalle de Usuario -->
+    <fragment
+        android:id="@+id/navigation_admin_user_detail"
+        android:name="com.example.rodapp.fragments.AdminUserDetailFragment"
+        android:label="Detalle Usuario"
+        tools:layout="@layout/fragment_admin_user_detail" />
 
     <fragment
         android:id="@+id/navigation_cambiar_password"
